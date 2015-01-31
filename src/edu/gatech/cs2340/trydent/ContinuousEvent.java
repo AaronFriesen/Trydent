@@ -44,7 +44,7 @@ public abstract class ContinuousEvent {
 	/**
 	 * Called when this event is run for the first time.
 	 */
-	public abstract void onStart();
+	public void onStart() {}
 	
 	/**
 	 * Called by the engine every frame.
@@ -54,6 +54,6 @@ public abstract class ContinuousEvent {
 	/**
 	 * Called when this event stops.
 	 */
-	public abstract void onStop();
+	public void onStop() {}
 	
 }

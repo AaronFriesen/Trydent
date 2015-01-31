@@ -2,6 +2,8 @@ package edu.gatech.cs2340.trydent.math;
 
 import java.lang.reflect.Array;
 
+import javafx.scene.transform.Transform;
+
 /**
  * Library of advanced math tools, primarily linear algebra. 
  * <p>
@@ -61,6 +63,19 @@ public class MathTools {
 	}
 	
 	/**
+	 * Linear interpolation from start to end at time t.
+     * (Advanced functionality).
+	 * @param start
+	 * @param end
+	 * @param t
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T extends BaseVector<?>> T lerp(T start, T end, double t) {
+	    return (T) start.copy().lerp(t, end);
+	}
+	
+	/**
 	 * Scalar hermite interpolation. (Advanced functionality).
 	 * <p>
 	 * {@code P(t) = (2t^3-3t^2+1)P0+(t^3-2t^2+t)T0+(-2t^3+3t^2)P1+(t^3-t^2)T1 }
@@ -89,7 +104,7 @@ public class MathTools {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T extends BaseVector<?>> T hermite(T p0, T t0, T p1, T t1, double t) {
+	public static <T extends BaseVector<?>> T hermite(T p0, BaseVector<?> t0, T p1, BaseVector<?> t1, double t) {
 		T point = (T) p0.copy();
 		for (int i = 0; i < point.getComponentCount(); i++) {
 			point.setComponent(i, hermite(
@@ -101,6 +116,67 @@ public class MathTools {
 			));
 		}
 		return point;
+	}
+	
+	/**
+	 * Returns the 2D rotation of the matrix in degrees.
+	 * @param matrix
+	 * @return
+	 */
+	public static double getRotation(Transform matrix) {
+        // [ xx xy xz tx ] = [ Sx*c -Sy*s  ... tx ]
+        // [ yx yy yz ty ]   [ Sx*s  Sy*c  ... ty ]
+        // [ zx zy zz tz ]   [ ...   ...   ... tz ]
+        // [ 0  0  0  1  ]   [  0     0     0   1 ]
+	    // yx = scaleX * sin(theta)
+	    // xx = scaleX * cos(theta)
+	    return Math.toDegrees(Math.atan2(matrix.getMyx(), matrix.getMxx()));
+	}
+	
+	/**
+	 * Returns the X scale of the matrix.
+	 * @param matrix
+	 * @return
+	 */
+	public static double getScaleX(Transform matrix) {
+        // [ xx xy xz tx ] = [ Sx*c -Sy*s  ... tx ]
+        // [ yx yy yz ty ]   [ Sx*s  Sy*c  ... ty ]
+        // [ zx zy zz tz ]   [ ...   ...   ... tz ]
+        // [ 0  0  0  1  ]   [  0     0     0   1 ]
+	    double theta = Math.toRadians(getRotation(matrix));
+	    return matrix.getMxx() / Math.cos(theta);
+	}
+	
+	/**
+	 * Returns the Y scale of the matrix.
+	 * @param matrix
+	 * @return
+	 */
+	public static double getScaleY(Transform matrix) {
+        // [ xx xy xz tx ] = [ Sx*c -Sy*s  ... tx ]
+        // [ yx yy yz ty ]   [ Sx*s  Sy*c  ... ty ]
+        // [ zx zy zz tz ]   [ ...   ...   ... tz ]
+        // [ 0  0  0  1  ]   [  0     0     0   1 ]
+        double theta = Math.toRadians(getRotation(matrix));
+        return matrix.getMyy() / Math.cos(theta);
+	}
+	
+	/**
+	 * Returns the x, y scale of the transform.
+	 * @param matrix
+	 * @return
+	 */
+	public static Scale getScale(Transform matrix) {
+	    return new Scale(getScaleX(matrix), getScaleY(matrix));
+	}
+	
+	/**
+	 * Returns the translation of the matrix.
+	 * @param matrix
+	 * @return
+	 */
+	public static Position getTranslation(Transform matrix) {
+	    return new Position(matrix.getTx(), matrix.getTy());
 	}
 	
 }
