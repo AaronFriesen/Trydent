@@ -1,6 +1,5 @@
 package edu.gatech.cs2340.trydent;
 
-import java.util.Collection;
 import java.util.List;
 
 import edu.gatech.cs2340.trydent.internal.TrydentInternalException;
@@ -8,7 +7,6 @@ import edu.gatech.cs2340.trydent.math.BaseVector;
 import edu.gatech.cs2340.trydent.math.MathTools;
 import edu.gatech.cs2340.trydent.math.Position;
 import edu.gatech.cs2340.trydent.math.Scale;
-import edu.gatech.cs2340.trydent.math.Vector;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
