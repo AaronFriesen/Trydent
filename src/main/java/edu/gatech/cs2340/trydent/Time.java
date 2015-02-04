@@ -2,10 +2,10 @@ package edu.gatech.cs2340.trydent;
 
 /**
  * Static class to keep track of time.
- * 
+ *
  * All values returned by public methods are in seconds, unless stated
  * otherwise.
- * 
+ *
  * @author Garrett Malmquist
  */
 public class Time {
@@ -13,7 +13,7 @@ public class Time {
     // There are 1000 milliseconds per second. This would change to
     // 1e9 if we were to use nano seconds instead.
     private static final double UNITS_PER_SECOND = 1000.0;
-    
+
     // All private variables are stored in milliseconds for accuracy.
     private static volatile double gameTimeSinceStartup;
     private static volatile long realTimeSinceStartup;
@@ -25,7 +25,7 @@ public class Time {
 
     /**
      * Game time in seconds since the game started.
-     * 
+     *
      * @return
      */
     public static double getTime() {
@@ -34,7 +34,7 @@ public class Time {
 
     /**
      * Game time in seconds  elapsed since the previous frame.
-     * 
+     *
      * @return
      */
     public static double getTimePassed() {
@@ -43,7 +43,7 @@ public class Time {
 
     /**
      * Real time in seconds  since the game started.
-     * 
+     *
      * @return
      */
     public static double getRealTimeSinceStartup() {
@@ -52,7 +52,7 @@ public class Time {
 
     /**
      * Real time in seconds  elapsed since the previous frame.
-     * 
+     *
      * @return
      */
     public static double getRealTimePassed() {
@@ -62,7 +62,7 @@ public class Time {
     /**
      * Rate of game time relative to real-time. I.e, a time rate of 0.5
      * indicates that the game is running at half-speed (in slow motion).
-     * 
+     *
      * @return
      */
     public static double getTimeRate() {
@@ -72,7 +72,7 @@ public class Time {
     /**
      * Sets the rate of game time relative to real-time. I.e, a time rate of 0.5
      * indicates that the game is running at half-speed (in slow motion).
-     * 
+     *
      * @param rate
      */
     public static void setTimeRate(double rate) {

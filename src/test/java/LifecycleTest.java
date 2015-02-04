@@ -1,6 +1,6 @@
 package edu.gatech.cs2340.trydent.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -177,8 +177,8 @@ public class LifecycleTest {
             ex.printStackTrace();
         }
 
-        String[] expected = { "onStart", "t0=0[.]0", "delta t0=0[.]0",
-                "onStop", "t1=(([1-9].*)|(0[.][0]*[1-9]+))" };
+        String[] expected = {"onStart", "t0=0[.]0", "delta t0=0[.]0",
+                             "onStop", "t1=(([1-9].*)|(0[.][0]*[1-9]+))" };
 
         assertTrue("expected # messages = " + expected.length + " got "
                 + messages.size(), expected.length == messages.size());

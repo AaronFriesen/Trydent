@@ -5,10 +5,10 @@ import java.util.Set;
 
 /**
  * Main class that kicks off the TrydentEngine.
- * 
+ *
  * As a developer using the TrydentEngine, all you have to do is call
  * TrydentEngine.start() to get started.
- * 
+ *
  * @author Garrett Malmquist
  * */
 public class TrydentEngine {
@@ -90,7 +90,7 @@ public class TrydentEngine {
     /**
      * Adds a continuous event -- an event that the engine will invoke once
      * every frame.
-     * 
+     *
      * @param event
      *            - A ContinuousEvent whose onUpdate() method will be invoked
      *            every frame.
@@ -101,7 +101,7 @@ public class TrydentEngine {
 
     /**
      * Stops running the given continuous event.
-     * 
+     *
      * @param event
      */
     protected static void removeContinuousEvent(ContinuousEvent event) {
