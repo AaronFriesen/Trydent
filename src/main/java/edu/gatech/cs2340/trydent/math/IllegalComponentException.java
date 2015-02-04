@@ -10,5 +10,5 @@ public class IllegalComponentException extends RuntimeException {
     public IllegalComponentException(int component) {
         super("Vector does not have component " + component + ".");
     }
-    
+
 }
