@@ -9,6 +9,11 @@ import edu.gatech.cs2340.trydent.TrydentEngine;
 import edu.gatech.cs2340.trydent.math.Position;
 import edu.gatech.cs2340.trydent.math.Scale;
 
+/**
+ * Example testing the display and orientation of rectangles.
+ * @author Garrett Malmquist
+ *
+ */
 public class RectangleExample implements Runnable {
 
     public static void main(String[] args) {        
@@ -33,6 +38,15 @@ public class RectangleExample implements Runnable {
         tiny.setParent(sub);
 
         sub.setLocalRotation(45);
+        
+        GameObject teenyParent = tiny;
+        for (int i = 0; i < 10; i++) {
+            GameObject teeny = new GameObject("Teeny", new Rectangle(20, 10, Color.ORANGE));
+            teeny.setParent(teenyParent);
+            teeny.setLocalPosition(new Position(55, 0));
+            teeny.setLocalRotation(30);
+            teenyParent = teeny;
+        }
         
         new Behavior(sub) {
             @Override
