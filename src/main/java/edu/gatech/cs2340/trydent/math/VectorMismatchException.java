@@ -5,7 +5,7 @@ package edu.gatech.cs2340.trydent.math;
  * @author Garrett Malmquist
  */
 public class VectorMismatchException extends RuntimeException {
-    
+
     public VectorMismatchException(String message) {
         super(message);
     }
