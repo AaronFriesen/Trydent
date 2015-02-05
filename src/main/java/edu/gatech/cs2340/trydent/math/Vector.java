@@ -4,6 +4,7 @@ package edu.gatech.cs2340.trydent.math;
  * Represents a displacement or direction in 2D.
  * <p>
  * (Internally represented as a vector, for the mathematically inclined).
+ *
  * @author Garrett Malmquist
  *
  */
@@ -11,6 +12,7 @@ public class Vector extends BaseVector<Vector> {
 
     /**
      * Creates a new 2D vector pointing in the direction dx, dy.
+     *
      * @param dx
      * @param dy
      */
@@ -27,8 +29,9 @@ public class Vector extends BaseVector<Vector> {
     }
 
     /**
-     * Creates a new Vector from the input vector
-     * (which can be a Vector, Position, etc).
+     * Creates a new Vector from the input vector (which can be a Vector,
+     * Position, etc).
+     *
      * @param other
      */
     public Vector(BaseVector<?> other) {
@@ -36,9 +39,13 @@ public class Vector extends BaseVector<Vector> {
     }
 
     /**
-     * Creates a new vector point from the first position to the second position.
-     * @param from - the first point (origin)
-     * @param to - the second point (destination)
+     * Creates a new vector point from the first position to the second
+     * position.
+     *
+     * @param from
+     *            - the first point (origin)
+     * @param to
+     *            - the second point (destination)
      */
     public Vector(Position from, Position to) {
         this(to.getX() - from.getX(), to.getY() - from.getY());
