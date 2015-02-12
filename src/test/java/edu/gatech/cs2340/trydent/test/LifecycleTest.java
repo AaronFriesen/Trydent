@@ -49,8 +49,7 @@ public class LifecycleTest {
         String text = messages.toString();
         String expected = "[onStart, onUpdate, onStop]";
 
-        assertTrue("Expected \"" + expected + "\", got \"" + text + "\"",
-                text.equals(expected));
+        assertTrue("Expected \"" + expected + "\", got \"" + text + "\"", text.equals(expected));
     }
 
     @Test
@@ -88,8 +87,7 @@ public class LifecycleTest {
         String text = messages.toString();
         String expected = "[onStart, onUpdate, onStop]";
 
-        assertTrue("Expected \"" + expected + "\", got \"" + text + "\"",
-                text.equals(expected));
+        assertTrue("Expected \"" + expected + "\", got \"" + text + "\"", text.equals(expected));
     }
 
     @Test
@@ -134,8 +132,7 @@ public class LifecycleTest {
         String text = messages.toString();
         String expected = "[onStart, onUpdate, onUpdate, onUpdate, onStop]";
 
-        assertTrue("Expected \"" + expected + "\", got \"" + text + "\"",
-                text.equals(expected));
+        assertTrue("Expected \"" + expected + "\", got \"" + text + "\"", text.equals(expected));
     }
 
     @Test
@@ -177,15 +174,17 @@ public class LifecycleTest {
             ex.printStackTrace();
         }
 
-        String[] expected = {"onStart", "t0=0[.]0", "delta t0=0[.]0",
-                             "onStop", "t1=(([1-9].*)|(0[.][0]*[1-9]+))" };
+        String[] expected = {
+            "onStart", "t0=0[.]0", "delta t0=0[.]0",
+            "onStop",
+            "t1=(([1-9].*)|(0[.][0]*[1-9]+[0-9]*))"
+        };
 
-        assertTrue("expected # messages = " + expected.length + " got "
-                + messages.size(), expected.length == messages.size());
+        assertTrue("expected # messages = " + expected.length + " got " + messages.size(),
+                expected.length == messages.size());
 
         for (int i = 0; i < expected.length; i++) {
-            assertTrue("Message #" + i + ": \"" + messages.get(i)
-                    + "\" should match \"" + expected[i] + "\"", messages
+            assertTrue("Message #" + i + ": \"" + messages.get(i) + "\" should match \"" + expected[i] + "\"", messages
                     .get(i).matches(expected[i]));
         }
     }

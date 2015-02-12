@@ -1,6 +1,6 @@
 package edu.gatech.cs2340.trydent.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -41,12 +41,14 @@ public class MathTest {
         try {
             new Position(1, 2).add(1);
             assertTrue("Expected vector mismatch exception!", false);
-        } catch (VectorMismatchException e) {}
+        } catch (VectorMismatchException e) {
+        }
 
         try {
             new Position(1, 2).add(1, 2, 3);
             assertTrue("Expected vector mismatch exception!", false);
-        } catch (VectorMismatchException e) {}
+        } catch (VectorMismatchException e) {
+        }
     }
 
     @Test
@@ -66,12 +68,14 @@ public class MathTest {
         try {
             new Position(1, 2).dot(1);
             assertTrue("Expected vector mismatch exception!", false);
-        } catch (VectorMismatchException e) {}
+        } catch (VectorMismatchException e) {
+        }
 
         try {
             new Position(1, 2).dot(1, 2, 3);
             assertTrue("Expected vector mismatch exception!", false);
-        } catch (VectorMismatchException e) {}
+        } catch (VectorMismatchException e) {
+        }
     }
 
     @Test
@@ -91,12 +95,14 @@ public class MathTest {
         try {
             new Position(1, 2).getComponent(3);
             assertTrue("getComponent(3) should throw an error!", false);
-        } catch (IllegalComponentException x) {}
+        } catch (IllegalComponentException x) {
+        }
 
         try {
             new Position(1, 2).getComponent(-1);
             assertTrue("getComponent(-1) should throw an error!", false);
-        } catch (IllegalComponentException x) {}
+        } catch (IllegalComponentException x) {
+        }
     }
 
     @Test
@@ -131,10 +137,7 @@ public class MathTest {
         stringEquals("<0.0, 0.0>", new Vector().normalize());
 
         Vector[] tests = {
-            new Vector(1.0, 2.0),
-            new Vector(5.0, 5.0),
-            new Vector(1.0, 0.0),
-            new Vector(0.0, 4.0)
+            new Vector(1.0, 2.0), new Vector(5.0, 5.0), new Vector(1.0, 0.0), new Vector(0.0, 4.0)
         };
 
         for (Vector v : tests) {
@@ -169,7 +172,7 @@ public class MathTest {
         stringEquals("(0.0, 0.0)", new Position(-6.0, 28.0).scale(0));
         stringEquals("(1.0, 1.0)", new Position(0.25, 0.5).scale(4, 2));
         stringEquals("(3.0, 6.0)", new Position(1.5, 24).scale(2.0, 0.25));
-        stringEquals("(-7.25, -0.125)", new Position(7.25*2, 0.125*2).scale(-0.5));
+        stringEquals("(-7.25, -0.125)", new Position(7.25 * 2, 0.125 * 2).scale(-0.5));
         stringEquals("(1.0, 1.0)", new Position(4.0, 4.0).scale(new Scale(0.25)));
     }
 
@@ -188,12 +191,14 @@ public class MathTest {
         try {
             new Position(1, 2).setComponent(3, 10);
             assertTrue("seComponent(3, x) should throw an error!", false);
-        } catch (IllegalComponentException x) {}
+        } catch (IllegalComponentException x) {
+        }
 
         try {
             new Position(1, 2).setComponent(-1, 10);
             assertTrue("setComponent(-1, x) should throw an error!", false);
-        } catch (IllegalComponentException x) {}
+        } catch (IllegalComponentException x) {
+        }
     }
 
     @Test
@@ -206,12 +211,14 @@ public class MathTest {
         try {
             new Position(1, 2).subtract(1);
             assertTrue("Expected vector mismatch exception!", false);
-        } catch (VectorMismatchException e) {}
+        } catch (VectorMismatchException e) {
+        }
 
         try {
             new Position(1, 2).subtract(1, 2, 3);
             assertTrue("Expected vector mismatch exception!", false);
-        } catch (VectorMismatchException e) {}
+        } catch (VectorMismatchException e) {
+        }
     }
 
 }

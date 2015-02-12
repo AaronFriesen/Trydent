@@ -4,14 +4,12 @@ import java.util.Arrays;
 
 /**
  * <strong>Developers using this library should use the Position and Vector
- * sub-classes rather than using this class directly.
- * </strong>
+ * sub-classes rather than using this class directly. </strong>
  * <p>
- * This is the base vector class providing functionality required by points
- * and vectors. It's written using generics to allow end-users
- * to easily intermingle Positions and Vectors without code
- * duplication, while keeping the concepts of Positions and
- * Vectors distinct to avoid code duplication.
+ * This is the base vector class providing functionality required by points and
+ * vectors. It's written using generics to allow end-users to easily intermingle
+ * Positions and Vectors without code duplication, while keeping the concepts of
+ * Positions and Vectors distinct to avoid code duplication.
  * <p>
  * <strong>All mathematical methods in this class, unless expressly stated
  * otherwise, are in-place (aka mutable), and return a reference to themselves.
@@ -22,18 +20,22 @@ import java.util.Arrays;
  * {@code Position myPosition = new Position(3, 5).add(new Vector(5, 7)).scale(2.0);}
  * <p>
  * As well as equivalent expressions like:
+ *
  * <pre>
- * {@code
- * Position myPosition = new Position(3, 5);
- * myPosition.add(new Vector(5, 7));
- * myPosition.scale(2.0);
- * }</pre>
+ * {
+ *     &#064;code
+ *     Position myPosition = new Position(3, 5);
+ *     myPosition.add(new Vector(5, 7));
+ *     myPosition.scale(2.0);
+ * }
+ * </pre>
+ *
  * </p>
  *
  * @author Garrett Malmquist
- * @param <T> - generic type used for inheritance;
- *              developers using this library need
- *              not worry about it.
+ * @param <T>
+ *            - generic type used for inheritance; developers using this library
+ *            need not worry about it.
  */
 public abstract class BaseVector<T extends BaseVector<T>> {
 
@@ -45,8 +47,9 @@ public abstract class BaseVector<T extends BaseVector<T>> {
     private String stringDelimit = ", ";
 
     /**
-     * Creates an new vector with the given number of components,
-     * initialized to the zero vector.
+     * Creates an new vector with the given number of components, initialized to
+     * the zero vector.
+     *
      * @param components
      */
     public BaseVector(int components) {
@@ -62,12 +65,14 @@ public abstract class BaseVector<T extends BaseVector<T>> {
 
     /**
      * Creates a copy of this vector.
+     *
      * @return
      */
     public abstract T copy();
 
     /**
      * Sets all components to 'value'.
+     *
      * @param value
      * @return
      */
@@ -78,9 +83,9 @@ public abstract class BaseVector<T extends BaseVector<T>> {
     }
 
     /**
-     * Returns the number of components in this vector
-     * (aka the dimension of this vector). Eg, for a 2D
-     * vector this will always be '2'.
+     * Returns the number of components in this vector (aka the dimension of
+     * this vector). Eg, for a 2D vector this will always be '2'.
+     *
      * @return
      */
     public int getComponentCount() {
@@ -91,6 +96,7 @@ public abstract class BaseVector<T extends BaseVector<T>> {
      * Returns the value of the ith component.
      *
      * Eg, 'x' is 0, 'y' is 1.
+     *
      * @param i
      * @return
      */
@@ -103,7 +109,8 @@ public abstract class BaseVector<T extends BaseVector<T>> {
     /**
      * Sets the value of the ith component.
      *
-     * @param i - index of the component to set. E.g., 'x' is 0, 'y' is 1.
+     * @param i
+     *            - index of the component to set. E.g., 'x' is 0, 'y' is 1.
      * @param value
      */
     public void setComponent(int i, double value) {
@@ -114,37 +121,51 @@ public abstract class BaseVector<T extends BaseVector<T>> {
 
     /**
      * Returns the x-component. Equivalent to {@code getComponent(0)}.
+     *
      * @return
      */
-    public double getX() { return values[0]; }
+    public double getX() {
+        return values[0];
+    }
 
     /**
      * Returns the y-component. Equivalent to {@code getComponent(1)}.
+     *
      * @return
      */
-    public double getY() { return values[1]; }
+    public double getY() {
+        return values[1];
+    }
 
     /**
      * Sets the x-component. Equivalent to {@code setComponent(0, value)}.
+     *
      * @param v
      */
-    public void setX(double v) { values[0] = v; }
+    public void setX(double v) {
+        values[0] = v;
+    }
 
     /**
      * Sets the y-component. Equivalent to {@code setComponent(1, value)}.
+     *
      * @param v
      */
-    public void setY(double v) { values[1] = v; }
+    public void setY(double v) {
+        values[1] = v;
+    }
 
     /**
      * Sets the components of this vector equal to the input parameters.
      * <p>
      * Eg, {@code set(0.0, 0.5)} would set x=0.0, y=0.5.
-     * @param components (a variable number of double variables)
+     *
+     * @param components
+     *            (a variable number of double variables)
      * @return returns itself.
      */
     @SuppressWarnings("unchecked")
-    public T set(double ... components) {
+    public T set(double... components) {
         for (int i = 0; i < components.length && i < values.length; i++) {
             values[i] = components[i];
         }
@@ -155,11 +176,13 @@ public abstract class BaseVector<T extends BaseVector<T>> {
      * Adds the second vector to this vector. I.e.:
      * <p>
      * {@code this = this + other}
-     * @param other - double values to add
+     *
+     * @param other
+     *            - double values to add
      * @return returns itself.
      */
     @SuppressWarnings("unchecked")
-    public T add(double ... other) {
+    public T add(double... other) {
         checkComponents(other);
         for (int i = 0; i < values.length && i < other.length; i++) {
             values[i] += other[i];
@@ -171,7 +194,9 @@ public abstract class BaseVector<T extends BaseVector<T>> {
      * Adds the second vector to this vector. I.e.:
      * <p>
      * {@code this = this + other}
-     * @param other - other vector
+     *
+     * @param other
+     *            - other vector
      * @return returns itself.
      */
     public T add(BaseVector<?> other) {
@@ -182,8 +207,11 @@ public abstract class BaseVector<T extends BaseVector<T>> {
      * Adds the second vector, scaled by 'scale', to this vector. I.e.:
      * <p>
      * this = this + (scale * other).
-     * @param scale - scalar number
-     * @param other - other vector
+     *
+     * @param scale
+     *            - scalar number
+     * @param other
+     *            - other vector
      */
     @SuppressWarnings("unchecked")
     public T add(double scale, BaseVector<?> other) {
@@ -198,11 +226,13 @@ public abstract class BaseVector<T extends BaseVector<T>> {
      * Subtracts the second vector from this vector. I.e.:
      * <p>
      * {@code this = this - other}
-     * @param other - double values to subtract
+     *
+     * @param other
+     *            - double values to subtract
      * @return returns itself.
      */
     @SuppressWarnings("unchecked")
-    public T subtract(double ... other) {
+    public T subtract(double... other) {
         checkComponents(other);
         for (int i = 0; i < values.length && i < other.length; i++) {
             values[i] -= other[i];
@@ -214,7 +244,9 @@ public abstract class BaseVector<T extends BaseVector<T>> {
      * Subtracts the second vector from this vector. I.e.:
      * <p>
      * {@code this = this - other}
-     * @param other - other vector to subtract
+     *
+     * @param other
+     *            - other vector to subtract
      * @return returns itself.
      */
     public T subtract(BaseVector<?> other) {
@@ -225,8 +257,11 @@ public abstract class BaseVector<T extends BaseVector<T>> {
      * Subtracts the second vector, scaled by 'scale', from this vector. I.e.:
      * <p>
      * this = this - (scale * other).
-     * @param scale - scalar number
-     * @param other - other vector
+     *
+     * @param scale
+     *            - scalar number
+     * @param other
+     *            - other vector
      */
     @SuppressWarnings("unchecked")
     public T subtract(double scale, BaseVector<?> other) {
@@ -238,19 +273,23 @@ public abstract class BaseVector<T extends BaseVector<T>> {
     }
 
     /**
-     * Scales this vectors components by the given amounts. If only one
-     * number is passed, it will scale all components by the same value.
+     * Scales this vectors components by the given amounts. If only one number
+     * is passed, it will scale all components by the same value.
      * <p>
      * Example usages:
-     * <pre>{@code
+     *
+     * <pre>
+     * {@code
      * this.scale(0.5) // scales whole vector by 0.5
      * this.scale(0.5, 0.75) // scales x by 0.5 and y by 0.75.
-     * }</pre>
+     * }
+     * </pre>
+     *
      * @param scale
      * @return
      */
     @SuppressWarnings("unchecked")
-    public T scale(double ... scale) {
+    public T scale(double... scale) {
         if (scale.length == 1) {
             for (int i = 0; i < values.length; i++)
                 values[i] *= scale[0];
@@ -263,13 +302,16 @@ public abstract class BaseVector<T extends BaseVector<T>> {
     }
 
     /**
-     * Scales the components of this vector by the components of the other vector. I.e.,
+     * Scales the components of this vector by the components of the other
+     * vector. I.e.,
+     *
      * <pre>
      * {@code
      * this.x = this.x * other.x;
      * this.y = this.y * other.y;
      * }
      * </pre>
+     *
      * @param other
      * @return
      */
@@ -279,8 +321,11 @@ public abstract class BaseVector<T extends BaseVector<T>> {
 
     /**
      * Rotates this vector's x,y components counter-clockwise.
-     * <p> (In the case of points, rotates in 2D about the origin).
-     * @param angle - amount to rotate by, in degrees.
+     * <p>
+     * (In the case of points, rotates in 2D about the origin).
+     *
+     * @param angle
+     *            - amount to rotate by, in degrees.
      * @return
      */
     @SuppressWarnings("unchecked")
@@ -295,11 +340,12 @@ public abstract class BaseVector<T extends BaseVector<T>> {
         double c = Math.cos(theta + angle);
         double s = Math.sin(theta + angle);
 
-        return set(m*c, m*s);
+        return set(m * c, m * s);
     }
 
     /**
      * Rotates this vector 90 counter-clockwise in 2D.
+     *
      * @return
      */
     public T rotate90() {
@@ -308,6 +354,7 @@ public abstract class BaseVector<T extends BaseVector<T>> {
 
     /**
      * Returns the magnitude (aka length, aka norm) of this vector.
+     *
      * @return
      */
     public double magnitude() {
@@ -316,6 +363,7 @@ public abstract class BaseVector<T extends BaseVector<T>> {
 
     /**
      * Returns the squared magnitude (magnitude^2) of this vector.
+     *
      * @return
      */
     public double magnitudeSquared() {
@@ -323,7 +371,9 @@ public abstract class BaseVector<T extends BaseVector<T>> {
     }
 
     /**
-     * Normalizes this vector (aka makes it unit length, aka makes its length = 1).
+     * Normalizes this vector (aka makes it unit length, aka makes its length =
+     * 1).
+     *
      * @return
      */
     @SuppressWarnings("unchecked")
@@ -335,24 +385,28 @@ public abstract class BaseVector<T extends BaseVector<T>> {
     }
 
     /**
-     * Returns the linear interpolation between this vector and the other
-     * vector by an amount t. (Advanced functionality).
-     * @param t - interpolation parameter (0 will give this vector,
-     *            1 will give the other vector, 0.5 is the midpoint.)
-     * @param other - the other vector
+     * Returns the linear interpolation between this vector and the other vector
+     * by an amount t. (Advanced functionality).
+     *
+     * @param t
+     *            - interpolation parameter (0 will give this vector, 1 will
+     *            give the other vector, 0.5 is the midpoint.)
+     * @param other
+     *            - the other vector
      * @return
      */
     @SuppressWarnings("unchecked")
     public T lerp(double t, BaseVector<?> other) {
         checkComponents(other);
         for (int i = 0; i < values.length && i < other.values.length; i++) {
-            values[i] = (1.0-t)*values[i] + t*other.values[i];
+            values[i] = (1.0 - t) * values[i] + t * other.values[i];
         }
         return (T) this;
     }
 
     /**
      * Returns the dot-product between the two vectors.
+     *
      * @param other
      * @return
      */
@@ -362,10 +416,12 @@ public abstract class BaseVector<T extends BaseVector<T>> {
 
     /**
      * Returns the dot-product between the two vectors.
-     * @param other - other vector, specified as a list of doubles.
+     *
+     * @param other
+     *            - other vector, specified as a list of doubles.
      * @return
      */
-    public double dot(double ... other) {
+    public double dot(double... other) {
         checkComponents(other);
         double total = 0;
         for (int i = 0; i < values.length && i < other.length; i++) {
@@ -385,7 +441,7 @@ public abstract class BaseVector<T extends BaseVector<T>> {
             if (Math.abs(value) < 1e-6)
                 sb.append("0.0");
             else {
-                value =  Math.round(value*1.0e6) / (1.0e6);
+                value = Math.round(value * 1.0e6) / (1.0e6);
                 sb.append(value);
             }
         }
@@ -405,10 +461,10 @@ public abstract class BaseVector<T extends BaseVector<T>> {
         this.stringDelimit = delimit;
     }
 
-    private void checkComponents(double ... values) {
+    private void checkComponents(double... values) {
         if (values.length != this.values.length)
-            throw new VectorMismatchException("Number of components must be "
-                    + this.values.length + ", got " + values.length);
+            throw new VectorMismatchException("Number of components must be " + this.values.length + ", got "
+                    + values.length);
     }
 
     private void checkComponents(BaseVector<?> vector) {

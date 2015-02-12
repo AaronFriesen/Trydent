@@ -3,7 +3,9 @@ package edu.gatech.cs2340.trydent.math;
 /**
  * A position in 2D.
  * <p>
- * (Aka a 2D point, represented internally as a vector displacement from the origin).
+ * (Aka a 2D point, represented internally as a vector displacement from the
+ * origin).
+ *
  * @author Garrett Malmquist
  *
  */
@@ -11,6 +13,7 @@ public class Position extends BaseVector<Position> {
 
     /**
      * Creates a new 2D position.
+     *
      * @param x
      * @param y
      */
@@ -32,8 +35,9 @@ public class Position extends BaseVector<Position> {
     }
 
     /**
-     * Creates a new position from the input vector
-     * (which can be another Position, Vector, etc).
+     * Creates a new position from the input vector (which can be another
+     * Position, Vector, etc).
+     *
      * @param other
      */
     public Position(BaseVector<?> other) {
