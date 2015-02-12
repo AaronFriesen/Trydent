@@ -1,7 +1,8 @@
 package edu.gatech.cs2340.trydent.math;
 
 /**
- * Represents a scaling of a 2D vector.
+ * Represents a scaling of a 2D vector. A scale in general can be (loosely)
+ * thought of as a size.
  *
  * @author Garrett Malmquist
  */
@@ -69,7 +70,7 @@ public class Scale extends BaseVector<Scale> {
      */
     @SuppressWarnings("unchecked")
     public <T extends BaseVector<?>> T applyTo(T vector) {
-        return (T) vector.copy().scale(this);
+        return (T)vector.copy().scale(this);
     }
 
 }
