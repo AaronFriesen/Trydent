@@ -18,6 +18,49 @@ public class MathTools {
     }
 
     /**
+     * Takes an angle in degrees and wraps it to the range 0 - 360.
+     *
+     * @param theta
+     * @return
+     */
+    public static double wrapAngle(double theta) {
+        if (theta < 0)
+            return 360.0 + (theta % 360.0);
+        return theta % 360.0;
+    }
+
+    /**
+     * Performs a linear interpolation from the first angle to the second at
+     * time t, going either clockwise or counter-clockwise depending on which
+     * distance is shorter.
+     *
+     * @param thetaA
+     * @param thetaB
+     * @param t
+     *            - interpolation parameter, where t=0 returns thetaA, and t=1
+     *            returns thetaB.
+     * @return
+     */
+    public static double degreeLerp(double thetaA, double thetaB, double t) {
+        thetaA = wrapAngle(thetaA);
+        thetaB = wrapAngle(thetaB);
+
+        double small = thetaA;
+        double large = thetaB;
+        if (thetaA > thetaB) {
+            small = thetaB;
+            large = thetaA;
+            t = 1.0 - t;
+        }
+
+        if (large - small > 180) {
+            // Quicker to go over the 0 = 360 degree barrier.
+            large -= 360;
+        }
+        return wrapAngle((1.0 - t) * small + t * large);
+    }
+
+    /**
      * Performs an (n-1) dimensional Bezier interpolation over n points.
      * (Advanced functionality).
      *

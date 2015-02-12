@@ -1,10 +1,13 @@
 package edu.gatech.cs2340.trydent.test;
 
+import static edu.gatech.cs2340.trydent.test.TestUtil.objectEquals;
+import static edu.gatech.cs2340.trydent.test.TestUtil.stringEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
 import edu.gatech.cs2340.trydent.math.IllegalComponentException;
+import edu.gatech.cs2340.trydent.math.MathTools;
 import edu.gatech.cs2340.trydent.math.Position;
 import edu.gatech.cs2340.trydent.math.Scale;
 import edu.gatech.cs2340.trydent.math.Vector;
@@ -12,9 +15,47 @@ import edu.gatech.cs2340.trydent.math.VectorMismatchException;
 
 public class MathTest {
 
-    private void stringEquals(String expected, Object actualObj) {
-        String actual = String.valueOf(actualObj);
-        assertTrue("Expected string \"" + expected + "\", got \"" + actual + "\"", actual.equals(expected));
+    @Test
+    public void testWrapAngle() {
+        // Test identity wraps.
+        for (int i = 0; i < 360; i += 10) {
+            double theta = i;
+            objectEquals(theta, MathTools.wrapAngle(theta));
+        }
+        // Overflow
+        objectEquals(300.0, MathTools.wrapAngle(-60.0));
+        // Underflow
+        objectEquals(10.0, MathTools.wrapAngle(370.0));
+        // Fractional overflow
+        objectEquals(10.25, MathTools.wrapAngle(370.25));
+        // Fractional underflow
+        objectEquals(299.75, MathTools.wrapAngle(-60.25));
+        // Extreme values
+        objectEquals(275.0, MathTools.wrapAngle(275.0 + 360.0 * 11.0));
+        objectEquals(275.0, MathTools.wrapAngle(275.0 - 360.0 * 11.0));
+    }
+
+    @Test
+    public void testLerpAngle() {
+        // Simple cases, where values should be same as normal lerp.
+        objectEquals(5.0, MathTools.degreeLerp(2, 8, 0.5));
+        objectEquals(2.0, MathTools.degreeLerp(2, 8, 0.0));
+        objectEquals(8.0, MathTools.degreeLerp(2, 8, 1.0));
+
+        // Lerping on negative values, which will be wrapped.
+        objectEquals(355.0, MathTools.degreeLerp(-2, -8, 0.5));
+
+        // Wrapping from negative to positive.
+        objectEquals(10.0, MathTools.degreeLerp(-10, 30, 0.5));
+
+        // Wrapping from positive to negative.
+        objectEquals(350.0, MathTools.degreeLerp(10, -30, 0.5));
+
+        // Lerping before the 180 degree divergence line.
+        objectEquals(170.0/2.0, MathTools.degreeLerp(0, 170.0, 0.5));
+
+        // Lerping after the 180 degree divergence line.
+        objectEquals(360.0 - (170.0/2.0), MathTools.degreeLerp(0, 190.0, 0.5));
     }
 
     @Test

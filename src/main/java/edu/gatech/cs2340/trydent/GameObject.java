@@ -8,11 +8,14 @@ import javafx.scene.Node;
 import javafx.scene.transform.NonInvertibleTransformException;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Transform;
+import edu.gatech.cs2340.trydent.animation.Animation;
 import edu.gatech.cs2340.trydent.internal.TrydentInternalException;
 import edu.gatech.cs2340.trydent.math.BaseVector;
 import edu.gatech.cs2340.trydent.math.MathTools;
+import edu.gatech.cs2340.trydent.math.Orientation;
 import edu.gatech.cs2340.trydent.math.Position;
 import edu.gatech.cs2340.trydent.math.Scale;
+import edu.gatech.cs2340.trydent.math.curve.TimeWrapMode;
 
 /**
  * Basic GameObject all visual elements of a game should either use directly or
@@ -31,6 +34,10 @@ public class GameObject {
     private Transform localRotate;
     private Transform localScale;
     private Transform localTranslate;
+
+    private Animation animation;
+    private double animationStartTime;
+    private int animationLoopCounter = 0;
 
     public GameObject(String name) {
         this();
@@ -57,6 +64,8 @@ public class GameObject {
         localTranslate = Transform.affine(1, 0, 0, 1, 0, 0);
 
         setMatrices(localTranslate, localRotate, localScale);
+
+        createAnimationBehavior();
     }
 
     public GameObject(Node javaFXObject) {
@@ -67,6 +76,71 @@ public class GameObject {
     public GameObject(String name, Node javaFXObject) {
         this(javaFXObject);
         this.name = name;
+    }
+
+    /**
+     * Plays the given animation, stopping any currently playing animations.
+     *
+     * @param animation
+     */
+    public void playAnimation(Animation animation) {
+        this.animation = animation;
+        this.animationStartTime = Time.getTime();
+        this.animationLoopCounter = 1;
+        animation.setTimeWrap(TimeWrapMode.CLAMP);
+    }
+
+    /**
+     * Plays the given animation, stopping any currently playing animations, and
+     * loops it count number of times.
+     *
+     * @param animation
+     * @param count
+     *            The number of times to play the animation. count = 0 will not
+     *            play anything, count = 1 will play the animation exactly once.
+     *            A negative value for count will cause the animation to loop
+     *            infinitely.
+     */
+    public void loopAnimation(Animation animation, int count) {
+        this.animation = animation;
+        this.animationStartTime = Time.getTime();
+        this.animationLoopCounter = count;
+        animation.setTimeWrap(TimeWrapMode.WRAP);
+    }
+
+    /**
+     * Plays the given animation in a loop forever.
+     *
+     * @param animation
+     */
+    public void loopAnimation(Animation animation) {
+        loopAnimation(animation, -1);
+    }
+
+    /**
+     * Stops the currently playing animation.
+     */
+    public void stopAnimation() {
+        this.animation = null;
+    }
+
+    private void createAnimationBehavior() {
+        new Behavior(this) {
+            @Override
+            public void onUpdate() {
+                GameObject g = getGameObject();
+                if (g.animation == null) {
+                    return;
+                }
+                double time = Time.getTime() - g.animationStartTime;
+                if (g.animationLoopCounter >= 0 && time > g.animationLoopCounter * g.animation.getDuration()) {
+                    g.animation = null;
+                    // TODO: add callbacks saying that the animation ended.
+                    return;
+                }
+                g.setLocalOrientation(g.animation.sample(time));
+            }
+        };
     }
 
     private void setMatrices(Transform translate, Transform rotate, Transform scale) {
@@ -92,6 +166,44 @@ public class GameObject {
 
     private void setScaleMatrix(Transform scale) {
         setMatrices(localTranslate, localRotate, scale);
+    }
+
+    /**
+     * Sets the global orientation of this object.
+     *
+     * @param orientation
+     */
+    public void setOrientation(Orientation orientation) {
+        setPosition(orientation.getPosition());
+        setRotation(orientation.getRotation());
+        setScale(orientation.getScale());
+    }
+
+    /**
+     * Sets the local orientation of this object.
+     *
+     * @param orientation
+     */
+    public void setLocalOrientation(Orientation orientation) {
+        setLocalPosition(orientation.getPosition());
+        setLocalRotation(orientation.getRotation());
+        setLocalScale(orientation.getScale());
+    }
+
+    /**
+     * Returns the global orientation of this object.
+     * @return
+     */
+    public Orientation getOrientation() {
+        return new Orientation(getPosition(), getRotation(), getScale());
+    }
+
+    /**
+     * Returns the local orientation of this object.
+     * @return
+     */
+    public Orientation getLocalOrientation() {
+        return new Orientation(getLocalPosition(), getLocalRotation(), getLocalScale());
     }
 
     /**
@@ -145,7 +257,8 @@ public class GameObject {
     }
 
     /**
-     * Sets the rotation of this object relative to its parent's rotation in degrees.
+     * Sets the rotation of this object relative to its parent's rotation in
+     * degrees.
      *
      * @param rotation
      */
@@ -256,7 +369,8 @@ public class GameObject {
     }
 
     /**
-     * Returns this object's rotation relative to its parent's rotation in degrees.
+     * Returns this object's rotation relative to its parent's rotation in
+     * degrees.
      *
      * @return
      */
