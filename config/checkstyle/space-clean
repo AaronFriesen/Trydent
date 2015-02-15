@@ -1,0 +1,3 @@
+#!/bin/sh
+
+git status | grep java | awk '{print $3}' | xargs -o -n 1 vim -c ":retab" -c ":%s/\s\+$//g" -c ":wq" > /dev/null
