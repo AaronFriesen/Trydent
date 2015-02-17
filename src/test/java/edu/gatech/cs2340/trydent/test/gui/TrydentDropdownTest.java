@@ -1,6 +1,6 @@
-package edu.gatech.cs2340.trydent.gui;
+package edu.gatech.cs2340.trydent.test.gui;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -12,7 +12,7 @@ import javafx.collections.ObservableList;
 
 import org.junit.Test;
 
-import edu.gatech.cs2340.trydent.test.gui.TrydentJavaFXGUITest;
+import edu.gatech.cs2340.trydent.gui.TrydentDropdown;
 
 @SuppressWarnings("rawtypes")
 public class TrydentDropdownTest extends TrydentJavaFXGUITest {

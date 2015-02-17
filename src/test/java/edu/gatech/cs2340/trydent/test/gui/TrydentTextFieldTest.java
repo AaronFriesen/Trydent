@@ -1,6 +1,6 @@
 package edu.gatech.cs2340.trydent.test.gui;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -26,10 +26,10 @@ public class TrydentTextFieldTest extends TrydentJavaFXGUITest {
     public void testTextFieldSet() {
         String prompt = "Hello";
         String textToSet = "Set";
-        
+
         TrydentTextField textField = new TrydentTextField(prompt);
         textField.setText(textToSet);
-        
+
         assertEquals(textToSet, textField.getText());
     }
 
@@ -38,13 +38,13 @@ public class TrydentTextFieldTest extends TrydentJavaFXGUITest {
         List<String> events = new LinkedList<>();
         String prompt = "Hello";
         String eventText = "Key Event";
-        
+
         TrydentTextField textField = new TrydentTextField(prompt);
-        
+
         textField.setKeyReleasedHandler(event -> events.add(eventText));
         Event.fireEvent(textField.getJavaFXElement(), new KeyEvent(
                 KeyEvent.KEY_RELEASED, "a", "a", KeyCode.A, false, false, false, false
-        ));
+                ));
         assertEquals(1, events.size());
     }
 
@@ -53,13 +53,13 @@ public class TrydentTextFieldTest extends TrydentJavaFXGUITest {
         List<String> events = new LinkedList<>();
         String prompt = "Hello";
         String eventText = "Key Event";
-        
+
         TrydentTextField textField = new TrydentTextField(prompt);
-        
+
         textField.setKeyPressedHandler(event -> events.add(eventText));
         Event.fireEvent(textField.getJavaFXElement(), new KeyEvent(
                 KeyEvent.KEY_PRESSED, "a", "a", KeyCode.A, false, false, false, false
-        ));
+                ));
         assertEquals(1, events.size());
     }
 
@@ -68,13 +68,13 @@ public class TrydentTextFieldTest extends TrydentJavaFXGUITest {
         List<String> events = new LinkedList<>();
         String prompt = "Hello";
         String eventText = "Key Event";
-        
+
         TrydentTextField textField = new TrydentTextField(prompt);
-        
+
         textField.setKeyTypedHandler(event -> events.add(eventText));
         Event.fireEvent(textField.getJavaFXElement(), new KeyEvent(
                 KeyEvent.KEY_TYPED, "a", "a", KeyCode.A, false, false, false, false
-        ));
+                ));
         assertEquals(1, events.size());
     }
 }

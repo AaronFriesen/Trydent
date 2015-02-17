@@ -11,6 +11,6 @@ public abstract class TrydentGUIWrapper<T> {
     /**
      * This method exists to access JavaFX control methods not exposed by Trydent
      * @return the JavaFX control underlying this wrapper object
-     */    
+     */
     public abstract T getJavaFXElement();
 }

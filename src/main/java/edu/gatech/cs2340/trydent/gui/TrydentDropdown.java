@@ -13,7 +13,7 @@ import javafx.scene.control.ChoiceBox;
 public class TrydentDropdown extends TrydentGUIWrapper<ChoiceBox> {
     protected ChoiceBox box;
     protected ObservableList items;
-    
+
     /**
      * Creates a dropdown box
      * @param items the items in the drop down
@@ -23,7 +23,7 @@ public class TrydentDropdown extends TrydentGUIWrapper<ChoiceBox> {
         this.box = new ChoiceBox(items);
         this.items = items;
     }
-    
+
     /**
      * Sets the listener for selection change events
      * @param listener the listener for selection events
@@ -31,7 +31,7 @@ public class TrydentDropdown extends TrydentGUIWrapper<ChoiceBox> {
     public void setSelectedListener(ChangeListener<? super Number> listener){
         box.getSelectionModel().selectedIndexProperty().addListener(listener);
     }
-    
+
     /**
      * Gets the index of the currently selected item
      * @return the index of the currently selected item, -1 for none
@@ -39,7 +39,7 @@ public class TrydentDropdown extends TrydentGUIWrapper<ChoiceBox> {
     public int getSelectedIndex(){
         return box.getItems().indexOf(box.getValue());
     }
-    
+
     /**
      * Selects a item by index
      * @param index the index of the newly selected item
@@ -48,7 +48,7 @@ public class TrydentDropdown extends TrydentGUIWrapper<ChoiceBox> {
     public void setSelectedIndex(int index){
         box.setValue(box.getItems().get(index));
     }
-    
+
     /**
      * @see edu.gatech.cs2340.trydent.gui.TydentGUIWrapper#getJavaFXElement()
      */
@@ -56,7 +56,7 @@ public class TrydentDropdown extends TrydentGUIWrapper<ChoiceBox> {
     public ChoiceBox getJavaFXElement() {
         return box;
     }
-    
+
     /**
      * Gets the items from the dropdown box
      * @return the list of items for the dropdown box

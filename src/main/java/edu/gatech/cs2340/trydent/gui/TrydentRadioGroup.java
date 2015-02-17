@@ -15,7 +15,7 @@ import javafx.scene.control.ToggleGroup;
 public class TrydentRadioGroup extends TrydentGUIWrapper<ToggleGroup> {
     protected ToggleGroup toggles;
     protected List<String> choices;
-    
+
     /**
      * Creates a radio button group with a set of choices
      * @param choices the text for the radio buttons
@@ -44,7 +44,7 @@ public class TrydentRadioGroup extends TrydentGUIWrapper<ToggleGroup> {
     public void setSelectedIndex(int index){
         toggles.selectToggle(toggles.getToggles().get(index));
     }
-    
+
     /**
      * Gets the index of the currently selected radio button
      * @return the index of the currently selected button, -1 for none

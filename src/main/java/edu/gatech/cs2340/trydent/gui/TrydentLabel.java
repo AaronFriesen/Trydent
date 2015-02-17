@@ -11,7 +11,7 @@ import javafx.scene.image.ImageView;
  */
 public class TrydentLabel extends TrydentGUIWrapper<Label> {
     protected Label label;
-    
+
     /**
      * Creates a label with an image and text
      * @param labelText the text for the label
@@ -27,7 +27,7 @@ public class TrydentLabel extends TrydentGUIWrapper<Label> {
             this.label.setGraphic(new ImageView(image));
         }
     }
-    
+
     /**
      * Creates a label with text
      * @param labelText the text for the label
@@ -35,7 +35,7 @@ public class TrydentLabel extends TrydentGUIWrapper<Label> {
     public TrydentLabel(String labelText){
         this(labelText, null);
     }
-    
+
     /**
      * @see edu.gatech.cs2340.trydent.gui.TydentGUIWrapper#getJavaFXElement()
      */

@@ -28,7 +28,7 @@ public class TrydentButton extends TrydentGUIWrapper<Button> {
             this.button.setGraphic(new ImageView(image));
         }
     }
-    
+
     /**
      * Creates a button with text
      * @param buttonText the text for the button
@@ -36,7 +36,7 @@ public class TrydentButton extends TrydentGUIWrapper<Button> {
     public TrydentButton(String buttonText){
         this(buttonText, null);
     }
-    
+
     /**
      * Adds a handler for button events
      * @param handler the handler to process button events
@@ -51,7 +51,7 @@ public class TrydentButton extends TrydentGUIWrapper<Button> {
     public void fire(){
         button.fire();
     }
-    
+
     /**
      * @see edu.gatech.cs2340.trydent.gui.TydentGUIWrapper#getJavaFXElement()
      */

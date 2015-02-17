@@ -1,6 +1,6 @@
 package edu.gatech.cs2340.trydent.test.gui;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.LinkedList;
 import java.util.List;

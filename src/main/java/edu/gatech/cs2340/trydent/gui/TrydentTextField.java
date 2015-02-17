@@ -11,7 +11,7 @@ import javafx.scene.input.KeyEvent;
  */
 public class TrydentTextField extends TrydentGUIWrapper<TextField> {
     protected TextField textField;
-    
+
     /**
      * Creates a text field with a prompt
      * @param prompt the prompt for the text field
@@ -20,25 +20,25 @@ public class TrydentTextField extends TrydentGUIWrapper<TextField> {
         this.textField = new TextField();
         textField.setPromptText(prompt);
     }
-    
+
     /**
-     * Adds a handler for key press events 
+     * Adds a handler for key press events
      * @param handler the handler to process key press events
      */
     public void setKeyPressedHandler(EventHandler<KeyEvent> handler){
         textField.setOnKeyPressed(handler);
     }
-    
+
     /**
-     * Adds a handler for key release events 
+     * Adds a handler for key release events
      * @param handler the handler to process key release events
      */
     public void setKeyReleasedHandler(EventHandler<KeyEvent> handler){
         textField.setOnKeyReleased(handler);
     }
-    
+
     /**
-     * Adds a handler for key typed (press then release) events 
+     * Adds a handler for key typed (press then release) events
      * @param handler the handler to process key typed events
      */
     public void setKeyTypedHandler(EventHandler<KeyEvent> handler){
@@ -52,7 +52,7 @@ public class TrydentTextField extends TrydentGUIWrapper<TextField> {
     public void setText(String text){
         textField.setText(text);
     }
-    
+
     /**
      * Gets the text in the text field
      * @return the current text in the text field

@@ -8,6 +8,7 @@ public class TrydentJavaFXGUITest {
     @BeforeClass
     public static void setUpClass() throws InterruptedException {
         new Thread() {
+            @Override
             public void run() {
                 Application.launch(MinimalJavaFXApplication.class, new String[0]);
             }
