@@ -11,14 +11,14 @@ import javafx.scene.input.KeyEvent;
 
 import org.junit.Test;
 
-import edu.gatech.cs2340.trydent.gui.TrydentTextField;
+import edu.gatech.cs2340.trydent.gui.TTextField;
 
-public class TrydentTextFieldTest extends TrydentJavaFXGUITest {
+public class TTextFieldTest extends TJavaFXGUITest {
 
     @Test
     public void testTextFieldCreate() {
         String prompt = "Hello";
-        TrydentTextField textField = new TrydentTextField(prompt);
+        TTextField textField = new TTextField(prompt);
         assertEquals(prompt, textField.getJavaFXElement().getPromptText());
     }
 
@@ -27,7 +27,7 @@ public class TrydentTextFieldTest extends TrydentJavaFXGUITest {
         String prompt = "Hello";
         String textToSet = "Set";
 
-        TrydentTextField textField = new TrydentTextField(prompt);
+        TTextField textField = new TTextField(prompt);
         textField.setText(textToSet);
 
         assertEquals(textToSet, textField.getText());
@@ -39,7 +39,7 @@ public class TrydentTextFieldTest extends TrydentJavaFXGUITest {
         String prompt = "Hello";
         String eventText = "Key Event";
 
-        TrydentTextField textField = new TrydentTextField(prompt);
+        TTextField textField = new TTextField(prompt);
 
         textField.setKeyReleasedHandler(event -> events.add(eventText));
         Event.fireEvent(textField.getJavaFXElement(), new KeyEvent(
@@ -54,7 +54,7 @@ public class TrydentTextFieldTest extends TrydentJavaFXGUITest {
         String prompt = "Hello";
         String eventText = "Key Event";
 
-        TrydentTextField textField = new TrydentTextField(prompt);
+        TTextField textField = new TTextField(prompt);
 
         textField.setKeyPressedHandler(event -> events.add(eventText));
         Event.fireEvent(textField.getJavaFXElement(), new KeyEvent(
@@ -69,7 +69,7 @@ public class TrydentTextFieldTest extends TrydentJavaFXGUITest {
         String prompt = "Hello";
         String eventText = "Key Event";
 
-        TrydentTextField textField = new TrydentTextField(prompt);
+        TTextField textField = new TTextField(prompt);
 
         textField.setKeyTypedHandler(event -> events.add(eventText));
         Event.fireEvent(textField.getJavaFXElement(), new KeyEvent(

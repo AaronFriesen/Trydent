@@ -12,7 +12,7 @@ import javafx.scene.control.ToggleGroup;
  * @author sparky
  *
  */
-public class TrydentRadioGroup extends TrydentGUIWrapper<ToggleGroup> {
+public class TRadioGroup extends TGUIWrapper<ToggleGroup> {
     protected ToggleGroup toggles;
     protected List<String> choices;
 
@@ -20,7 +20,7 @@ public class TrydentRadioGroup extends TrydentGUIWrapper<ToggleGroup> {
      * Creates a radio button group with a set of choices
      * @param choices the text for the radio buttons
      */
-    public TrydentRadioGroup(List<String> choices){
+    public TRadioGroup(List<String> choices){
         toggles = new ToggleGroup();
         this.choices = choices;
         for(String choice : choices){

@@ -7,14 +7,14 @@ import java.util.List;
 
 import org.junit.Test;
 
-import edu.gatech.cs2340.trydent.gui.TrydentButton;
+import edu.gatech.cs2340.trydent.gui.TButton;
 
-public class TrydentButtonTest extends TrydentJavaFXGUITest{
+public class TButtonTest extends TJavaFXGUITest{
 
     @Test
     public void testButtonCreate() {
         String buttonText = "Hello";
-        TrydentButton button = new TrydentButton(buttonText);
+        TButton button = new TButton(buttonText);
         assertEquals(buttonText, button.getJavaFXElement().getText());
     }
 
@@ -24,7 +24,7 @@ public class TrydentButtonTest extends TrydentJavaFXGUITest{
 
         String buttonText = "Hello";
         String eventText = "Button Fired";
-        TrydentButton button = new TrydentButton(buttonText);
+        TButton button = new TButton(buttonText);
 
         button.setActionHandler(event -> events.add(eventText));
         button.fire();

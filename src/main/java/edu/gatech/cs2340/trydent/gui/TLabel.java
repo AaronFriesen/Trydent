@@ -9,7 +9,7 @@ import javafx.scene.image.ImageView;
  * @author sparky
  *
  */
-public class TrydentLabel extends TrydentGUIWrapper<Label> {
+public class TLabel extends TGUIWrapper<Label> {
     protected Label label;
 
     /**
@@ -17,7 +17,7 @@ public class TrydentLabel extends TrydentGUIWrapper<Label> {
      * @param labelText the text for the label
      * @param imageUri the image for the label
      */
-    public TrydentLabel(String labelText, String imageUri){
+    public TLabel(String labelText, String imageUri){
         if(imageUri == null || imageUri.equals("")){
             this.label = new Label(labelText);
         } else {
@@ -32,7 +32,7 @@ public class TrydentLabel extends TrydentGUIWrapper<Label> {
      * Creates a label with text
      * @param labelText the text for the label
      */
-    public TrydentLabel(String labelText){
+    public TLabel(String labelText){
         this(labelText, null);
     }
 

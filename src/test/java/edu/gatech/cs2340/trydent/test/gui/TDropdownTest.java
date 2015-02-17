@@ -12,22 +12,22 @@ import javafx.collections.ObservableList;
 
 import org.junit.Test;
 
-import edu.gatech.cs2340.trydent.gui.TrydentDropdown;
+import edu.gatech.cs2340.trydent.gui.TDropdown;
 
 @SuppressWarnings("rawtypes")
-public class TrydentDropdownTest extends TrydentJavaFXGUITest {
+public class TDropdownTest extends TJavaFXGUITest {
 
     @Test
     public void testDropdownCreate() {
         ObservableList items = FXCollections.observableArrayList("A", "B", "C");
-        TrydentDropdown dropdown = new TrydentDropdown(items);
+        TDropdown dropdown = new TDropdown(items);
         assertEquals(items.size(), dropdown.getJavaFXElement().getItems().size());
     }
 
     @Test
     public void testDropdownpSelect() {
         ObservableList items = FXCollections.observableArrayList("A", "B", "C");
-        TrydentDropdown dropdown = new TrydentDropdown(items);
+        TDropdown dropdown = new TDropdown(items);
         assertEquals(-1, dropdown.getSelectedIndex());
         dropdown.setSelectedIndex(2);
         assertEquals(2, dropdown.getSelectedIndex());
@@ -39,7 +39,7 @@ public class TrydentDropdownTest extends TrydentJavaFXGUITest {
         String eventText = "Selection Changed";
 
         ObservableList items = FXCollections.observableArrayList("A", "B", "C");
-        TrydentDropdown dropdown = new TrydentDropdown(items);
+        TDropdown dropdown = new TDropdown(items);
         dropdown.setSelectedListener(new ChangeListener<Number>(){
             @Override
             public void changed(ObservableValue<? extends Number> observable,

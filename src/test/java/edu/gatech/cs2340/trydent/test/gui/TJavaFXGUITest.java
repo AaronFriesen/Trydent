@@ -4,7 +4,7 @@ import javafx.application.Application;
 
 import org.junit.BeforeClass;
 
-public class TrydentJavaFXGUITest {
+public class TJavaFXGUITest {
     @BeforeClass
     public static void setUpClass() throws InterruptedException {
         new Thread() {

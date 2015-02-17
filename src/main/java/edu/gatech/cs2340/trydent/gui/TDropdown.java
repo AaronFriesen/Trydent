@@ -10,7 +10,7 @@ import javafx.scene.control.ChoiceBox;
  *
  */
 @SuppressWarnings("rawtypes")
-public class TrydentDropdown extends TrydentGUIWrapper<ChoiceBox> {
+public class TDropdown extends TGUIWrapper<ChoiceBox> {
     protected ChoiceBox box;
     protected ObservableList items;
 
@@ -19,7 +19,7 @@ public class TrydentDropdown extends TrydentGUIWrapper<ChoiceBox> {
      * @param items the items in the drop down
      */
     @SuppressWarnings("unchecked")
-    public TrydentDropdown(ObservableList items){
+    public TDropdown(ObservableList items){
         this.box = new ChoiceBox(items);
         this.items = items;
     }

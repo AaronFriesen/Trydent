@@ -4,14 +4,14 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import edu.gatech.cs2340.trydent.gui.TrydentLabel;
+import edu.gatech.cs2340.trydent.gui.TLabel;
 
-public class TrydentLabelTest extends TrydentJavaFXGUITest{
+public class TLabelTest extends TJavaFXGUITest{
 
     @Test
     public void testLabelCreate() {
         String labelText = "Hello";
-        TrydentLabel label = new TrydentLabel(labelText);
+        TLabel label = new TLabel(labelText);
         assertEquals(labelText, label.getJavaFXElement().getText());
     }
 }

@@ -9,14 +9,14 @@ import javafx.scene.input.KeyEvent;
  * @author sparky
  *
  */
-public class TrydentTextField extends TrydentGUIWrapper<TextField> {
+public class TTextField extends TGUIWrapper<TextField> {
     protected TextField textField;
 
     /**
      * Creates a text field with a prompt
      * @param prompt the prompt for the text field
      */
-    public TrydentTextField(String prompt){
+    public TTextField(String prompt){
         this.textField = new TextField();
         textField.setPromptText(prompt);
     }

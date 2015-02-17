@@ -10,7 +10,7 @@ import javafx.scene.image.ImageView;
  * @author sparky
  *
  */
-public class TrydentButton extends TrydentGUIWrapper<Button> {
+public class TButton extends TGUIWrapper<Button> {
     protected Button button;
 
     /**
@@ -18,7 +18,7 @@ public class TrydentButton extends TrydentGUIWrapper<Button> {
      * @param buttonText the text for the button
      * @param imageUri the image for the button
      */
-    public TrydentButton(String buttonText, String imageUri){
+    public TButton(String buttonText, String imageUri){
         if(imageUri == null || imageUri.equals("")){
             this.button = new Button(buttonText);
         } else {
@@ -33,7 +33,7 @@ public class TrydentButton extends TrydentGUIWrapper<Button> {
      * Creates a button with text
      * @param buttonText the text for the button
      */
-    public TrydentButton(String buttonText){
+    public TButton(String buttonText){
         this(buttonText, null);
     }
 

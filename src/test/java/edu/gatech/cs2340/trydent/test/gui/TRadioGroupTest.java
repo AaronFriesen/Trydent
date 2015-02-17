@@ -11,9 +11,9 @@ import javafx.scene.control.Toggle;
 
 import org.junit.Test;
 
-import edu.gatech.cs2340.trydent.gui.TrydentRadioGroup;
+import edu.gatech.cs2340.trydent.gui.TRadioGroup;
 
-public class TrydentRadioGroupTest extends TrydentJavaFXGUITest {
+public class TRadioGroupTest extends TJavaFXGUITest {
 
     @Test
     public void testRadioGroupCreate() {
@@ -21,7 +21,7 @@ public class TrydentRadioGroupTest extends TrydentJavaFXGUITest {
         choices.add("A");
         choices.add("B");
         choices.add("C");
-        TrydentRadioGroup group = new TrydentRadioGroup(choices);
+        TRadioGroup group = new TRadioGroup(choices);
         assertEquals(choices.size(), group.getJavaFXElement().getToggles().size());
     }
 
@@ -31,7 +31,7 @@ public class TrydentRadioGroupTest extends TrydentJavaFXGUITest {
         choices.add("A");
         choices.add("B");
         choices.add("C");
-        TrydentRadioGroup group = new TrydentRadioGroup(choices);
+        TRadioGroup group = new TRadioGroup(choices);
         assertEquals(-1, group.getSelectedIndex());
         group.setSelectedIndex(2);
         assertEquals(2, group.getSelectedIndex());
@@ -45,7 +45,7 @@ public class TrydentRadioGroupTest extends TrydentJavaFXGUITest {
         choices.add("A");
         choices.add("B");
         choices.add("C");
-        TrydentRadioGroup group = new TrydentRadioGroup(choices);
+        TRadioGroup group = new TRadioGroup(choices);
         group.setSelectedListener(new ChangeListener<Toggle>(){
             @Override
             public void changed(ObservableValue<? extends Toggle> observable,

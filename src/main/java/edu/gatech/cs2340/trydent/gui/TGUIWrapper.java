@@ -6,7 +6,7 @@ package edu.gatech.cs2340.trydent.gui;
  *
  * @param <T> the type of the underlying JavaFx control element
  */
-public abstract class TrydentGUIWrapper<T> {
+public abstract class TGUIWrapper<T> {
 
     /**
      * This method exists to access JavaFX control methods not exposed by Trydent
