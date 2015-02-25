@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.GridPane?>
+
+<GridPane alignment="CENTER" gridLinesVisible="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <rowConstraints>
+      <RowConstraints maxHeight="1.7976931348623157E308" minHeight="100.0" vgrow="ALWAYS" />
+      <RowConstraints maxHeight="1.7976931348623157E308" minHeight="100.0" vgrow="ALWAYS" />
+      <RowConstraints maxHeight="1.7976931348623157E308" minHeight="100.0" vgrow="ALWAYS" />
+   </rowConstraints>
+   <columnConstraints>
+      <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="100.0" percentWidth="30.0" />
+      <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="100.0" />
+      <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="100.0" percentWidth="30.0" />
+   </columnConstraints>
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" text="Hellow World" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+   </children>
+</GridPane>

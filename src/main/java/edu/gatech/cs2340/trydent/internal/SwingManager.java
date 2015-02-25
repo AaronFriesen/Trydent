@@ -7,7 +7,9 @@ import javafx.embed.swing.JFXPanel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
@@ -27,7 +29,9 @@ public class SwingManager implements JavaFXManager {
     private Runnable updateAction;
 
     private Scene scene;
-    private Group root;
+    private StackPane root;
+    private Group background;
+
     private Timeline timeline;
 
     @Override
@@ -62,10 +66,12 @@ public class SwingManager implements JavaFXManager {
     }
 
     private void createScene(JFXPanel panel) {
-        root = new Group();
-        scene = new Scene(root, Color.BLACK);
+        root = new StackPane();
+        scene = new Scene(root, Color.TRANSPARENT);
         panel.setScene(scene);
 
+        background = new Group();
+        root.getChildren().addAll(background);
         long sleepTimeMillis = 5;
         timeline = new Timeline(new KeyFrame(Duration.ZERO, new EventHandler<ActionEvent>() {
             @Override
@@ -143,13 +149,19 @@ public class SwingManager implements JavaFXManager {
     }
 
     @Override
-    public Scene getScene() {
-        return scene;
+    public Group getBackground() {
+        return background;
     }
 
     @Override
-    public Group getRoot() {
-        return root;
+    public Node setForeground(Node foreground) {
+        if (root.getChildren().size() == 1) {
+            root.getChildren().add(foreground);
+            return null;
+        } else {
+            Node previous = root.getChildren().get(1);
+            root.getChildren().set(1, foreground);
+            return previous;
+        }
     }
-
 }
