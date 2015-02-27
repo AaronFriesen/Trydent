@@ -18,6 +18,47 @@ public class MathTools {
     }
 
     /**
+     * Takes an angle in degrees and wraps it to the range 0 - 360.
+     *
+     * @param theta
+     * @return
+     */
+    public static double wrapAngle(double theta) {
+        if (theta < 0)
+            return 360.0 + (theta % 360.0);
+        return theta % 360.0;
+    }
+
+    /**
+     * Performs a linear interpolation from the first angle to the second at
+     * time t, going either clockwise or counter-clockwise depending on which
+     * distance is shorter.
+     *
+     * @param thetaA
+     * @param thetaB
+     * @param t - interpolation parameter, where t=0 returns thetaA, and t=1 returns thetaB.
+     * @return
+     */
+    public static double degreeLerp(double thetaA, double thetaB, double t) {
+        thetaA = wrapAngle(thetaA);
+        thetaB = wrapAngle(thetaB);
+
+        double small = thetaA;
+        double large = thetaB;
+        if (thetaA > thetaB) {
+            small = thetaB;
+            large = thetaA;
+            t = 1.0 - t;
+        }
+
+        if (large - small > 180) {
+            // Quicker to go over the 0 = 360 degree barrier.
+            large -= 360;
+        }
+        return wrapAngle((1.0 - t) * small + t * large);
+    }
+
+    /**
      * Performs an (n-1) dimensional Bezier interpolation over n points.
      * (Advanced functionality).
      *
@@ -34,23 +75,23 @@ public class MathTools {
             throw new IllegalArgumentException("Must input at least one point!");
 
         if (points.length == 1)
-            return (T) points[0].copy();
+            return (T)points[0].copy();
 
         // Strictly speaking this base case could be omitted without loss of
         // functionality,
         // but it makes things a bit more efficient.
         if (points.length == 2)
-            return (T) points[0].copy().lerp(t, points[1]);
+            return (T)points[0].copy().lerp(t, points[1]);
 
-        T[] left = (T[]) Array.newInstance(points[0].getClass(), points.length - 1);
-        T[] right = (T[]) Array.newInstance(points[0].getClass(), points.length - 1);
+        T[] left = (T[])Array.newInstance(points[0].getClass(), points.length - 1);
+        T[] right = (T[])Array.newInstance(points[0].getClass(), points.length - 1);
 
         for (int i = 0; i < points.length - 1; i++) {
             left[i] = points[i];
             right[i] = points[i + 1];
         }
 
-        return (T) bezier(t, left).lerp(t, bezier(t, right));
+        return (T)bezier(t, left).lerp(t, bezier(t, right));
     }
 
     /**
@@ -66,7 +107,7 @@ public class MathTools {
      */
     @SuppressWarnings("unchecked")
     public static <T extends BaseVector<?>> T lerp(double a, T start, double b, T end, double t) {
-        return (T) start.copy().lerp((t - a) / (b - a), end);
+        return (T)start.copy().lerp((t - a) / (b - a), end);
     }
 
     /**
@@ -80,7 +121,7 @@ public class MathTools {
      */
     @SuppressWarnings("unchecked")
     public static <T extends BaseVector<?>> T lerp(T start, T end, double t) {
-        return (T) start.copy().lerp(t, end);
+        return (T)start.copy().lerp(t, end);
     }
 
     /**
@@ -125,7 +166,7 @@ public class MathTools {
      */
     @SuppressWarnings("unchecked")
     public static <T extends BaseVector<?>> T hermite(T p0, BaseVector<?> t0, T p1, BaseVector<?> t1, double t) {
-        T point = (T) p0.copy();
+        T point = (T)p0.copy();
         for (int i = 0; i < point.getComponentCount(); i++) {
             point.setComponent(i,
                     hermite(p0.getComponent(i), t0.getComponent(i), p1.getComponent(i), t1.getComponent(i), t));

@@ -44,7 +44,13 @@ public class TrydentEngine {
             Time.startTheDawnOfTime();
 
         if (!doQuit) {
-            updateContinuousEvents();
+            try {
+                updateContinuousEvents();
+            } catch (Exception ex) {
+                Log.error(String.valueOf(ex));
+                ex.printStackTrace();
+                quit();
+            }
             Time.updateTime();
         } else {
             cleanup();
