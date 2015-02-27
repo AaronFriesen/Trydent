@@ -9,6 +9,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
@@ -71,7 +72,8 @@ public class SwingManager implements JavaFXManager {
         panel.setScene(scene);
 
         background = new Group();
-        root.getChildren().addAll(background);
+        root.getChildren().addAll(new Pane(background));
+
         long sleepTimeMillis = 5;
         timeline = new Timeline(new KeyFrame(Duration.ZERO, new EventHandler<ActionEvent>() {
             @Override
