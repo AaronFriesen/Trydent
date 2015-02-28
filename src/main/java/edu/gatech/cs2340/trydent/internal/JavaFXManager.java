@@ -1,7 +1,7 @@
 package edu.gatech.cs2340.trydent.internal;
 
 import javafx.scene.Group;
-import javafx.scene.Scene;
+import javafx.scene.Node;
 
 /**
  * Class to manage starting/stopping JavaFX.
@@ -24,8 +24,8 @@ public interface JavaFXManager {
 
     void setFullscreen(boolean fullscreen);
 
-    Scene getScene();
+    Group getBackground();
 
-    Group getRoot();
+    Node setForeground(Node foreground);
 
 }

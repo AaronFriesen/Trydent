@@ -1,9 +1,12 @@
 package edu.gatech.cs2340.trydent;
 
+import java.net.URL;
 import java.util.HashSet;
 import java.util.Set;
 
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import edu.gatech.cs2340.trydent.internal.JavaFXManager;
 import edu.gatech.cs2340.trydent.internal.SwingManager;
 import edu.gatech.cs2340.trydent.log.Log;
@@ -26,8 +29,7 @@ public class TrydentEngine {
 
     private volatile long frameNumber;
 
-    private Set<ContinuousEvent> continuousEvents, continuousEventsToAdd,
-            continuousEventsToRemove;
+    private Set<ContinuousEvent> continuousEvents, continuousEventsToAdd, continuousEventsToRemove;
 
     private JavaFXManager fxManager;
 
@@ -119,7 +121,24 @@ public class TrydentEngine {
     }
 
     static Group getRootNode() {
-        return getInstance().fxManager.getRoot();
+        return getInstance().fxManager.getBackground();
+    }
+
+    /**
+     * Replaces the current foreground layout node
+     * @param resource the url of the new JavaFX node
+     * @return the previous foreground JavaFX node, if none, returns null
+     */
+    public static Node setForeground(URL resource){
+        Node previous = null;
+        try {
+            FXMLLoader myLoader = new FXMLLoader(resource);
+            Node node = myLoader.load();
+            previous = getInstance().fxManager.setForeground(node);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return previous;
     }
 
     /**

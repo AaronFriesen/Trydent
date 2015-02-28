@@ -26,6 +26,8 @@ public class RectangleExample implements Runnable {
 
     @Override
     public void run() {
+        TrydentEngine.setForeground(getClass().getResource("TitleScreen.fxml"));
+
         GameObject obj = new GameObject(new Rectangle(100, 20, Color.GREEN));
         obj.setLocalPosition(new Position(100, 100));
 
