@@ -28,7 +28,7 @@ public class GameObject {
 
     private String name = "Untitled GameObject";
 
-    private Group fxNode;
+    protected Group fxNode;
     private GameObject parent;
 
     private Transform localRotate;
