@@ -24,6 +24,7 @@ public class SwingManager implements JavaFXManager {
 
     private String windowTitle = "TrydentEngine";
     private int width = 640, height = 480;
+    private Color backgroundColor = Color.BLACK;
     private Runnable updateAction;
 
     private Scene scene;
@@ -63,7 +64,7 @@ public class SwingManager implements JavaFXManager {
 
     private void createScene(JFXPanel panel) {
         root = new Group();
-        scene = new Scene(root, Color.BLACK);
+        scene = new Scene(root, backgroundColor);
         panel.setScene(scene);
 
         long sleepTimeMillis = 5;
@@ -140,6 +141,14 @@ public class SwingManager implements JavaFXManager {
     public void setFullscreen(boolean fullscreen) {
         if (fullscreen)
             throw new TrydentInternalException("Fullscreen not implemented yet.");
+    }
+
+    @Override
+    public void setBackgroundColor(Color color) {
+        backgroundColor = color;
+        if (scene != null) {
+            scene.setFill(color);
+        }
     }
 
     @Override

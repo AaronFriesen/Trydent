@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javafx.scene.Group;
+import javafx.scene.paint.Color;
 import edu.gatech.cs2340.trydent.internal.JavaFXManager;
 import edu.gatech.cs2340.trydent.internal.SwingManager;
 import edu.gatech.cs2340.trydent.log.Log;
@@ -198,6 +199,10 @@ public class TrydentEngine {
 
     public static void setWindowSize(int width, int height) {
         getInstance().fxManager.setWindowSize(width, height);
+    }
+
+    public static void setBackgroundColor(Color color) {
+        getInstance().fxManager.setBackgroundColor(color);
     }
 
 }
