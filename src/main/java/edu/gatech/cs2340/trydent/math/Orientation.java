@@ -15,8 +15,11 @@ public class Orientation {
      * Creates a new orientation with the given position, rotation, and scale.
      *
      * @param position
+     *            position, where (0,0) is the identity
      * @param rotation
+     *            rotation in degrees, where 0 is the identity
      * @param scale
+     *            scaling, where (1,1) is the identity
      */
     public Orientation(Position position, double rotation, Scale scale) {
         this.position = position;
@@ -25,9 +28,10 @@ public class Orientation {
     }
 
     /**
-     * Gets the position.
+     * Gets the position. Modifying the returned value will not affect the
+     * underlying position of this object.
      *
-     * @return
+     * @return Position object
      */
     public Position getPosition() {
         return position.copy();
@@ -55,6 +59,7 @@ public class Orientation {
      * Sets the position.
      *
      * @param p
+     *            new position
      */
     public void setPosition(Position p) {
         this.position = p.copy();
@@ -74,6 +79,7 @@ public class Orientation {
      * Sets the scale.
      *
      * @param s
+     *            - new scale
      */
     public void setScale(Scale s) {
         this.scale = s.copy();
@@ -84,6 +90,7 @@ public class Orientation {
      * other orientation.
      *
      * @param other
+     *            other Orientation
      */
     public void set(Orientation other) {
         setPosition(other.position);
@@ -94,7 +101,7 @@ public class Orientation {
     /**
      * Returns a copy of this Orientation.
      *
-     * @return
+     * @return new Orientation
      */
     public Orientation copy() {
         return new Orientation(position, rotation, scale);
@@ -106,9 +113,10 @@ public class Orientation {
      * (Advanced functionality).
      *
      * @param t
-     *            - interpolation parameter between 0 and 1 to interpolate.
+     *            interpolation parameter between 0 and 1 to interpolate.
      * @param other
-     * @return
+     *            Orientation to lerp towards
+     * @return interpolated orientation
      */
     public Orientation lerp(double t, Orientation other) {
         position.lerp(t, other.position);

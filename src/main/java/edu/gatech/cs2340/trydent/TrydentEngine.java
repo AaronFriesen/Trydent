@@ -132,10 +132,12 @@ public class TrydentEngine {
 
     /**
      * Replaces the current foreground layout node
-     * @param resource the url of the new JavaFX node
+     *
+     * @param resource
+     *            the url of the new JavaFX node
      * @return the previous foreground JavaFX node, if none, returns null
      */
-    public static Node setForeground(URL resource){
+    public static Node setForeground(URL resource) {
         Node previous = null;
         try {
             FXMLLoader myLoader = new FXMLLoader(resource);
@@ -166,7 +168,7 @@ public class TrydentEngine {
                 }
             });
             // Could pass command-line args here maybe
-            //JavaFXFacade.main(args);
+            // JavaFXFacade.main(args);
             engine.fxManager.startJavaFX();
         }
     }
@@ -177,6 +179,9 @@ public class TrydentEngine {
 
     /**
      * Hangs the current thread until the TrydentEngine stops running.
+     *
+     * @throws InterruptedException
+     *             if this thread is interrupted while waiting
      */
     public static void waitUntilEngineStops() throws InterruptedException {
         // We don't have our own thread, because we rely on JavaFX
@@ -192,18 +197,20 @@ public class TrydentEngine {
     }
 
     /**
-     * Returns true if the TrydentEngine has been started, and
-     * hasn't been stopped.
-     * @return
+     * Returns true if the TrydentEngine has been started, and hasn't been
+     * stopped.
+     *
+     * @return whether the engine is running
      */
     public static boolean isRunning() {
         return getInstance().fxManager.isRunning();
     }
 
     /**
-     * Tells the TrydentEngine to run the given runnable
-     * on the next frame.
+     * Tells the TrydentEngine to run the given runnable on the next frame.
+     *
      * @param runnable
+     *            action to run
      */
     public static void runLater(final Runnable runnable) {
         new ContinuousEvent() {
@@ -212,8 +219,10 @@ public class TrydentEngine {
                 runnable.run();
                 this.stop();
             }
+
             @Override
-            public void onUpdate() {}
+            public void onUpdate() {
+            }
         };
     }
 

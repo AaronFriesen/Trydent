@@ -26,34 +26,37 @@ public class Time {
     /**
      * Game time in seconds since the game started.
      *
-     * @return
+     * @return time in seconds
      */
     public static double getTime() {
         return gameTimeSinceStartup / UNITS_PER_SECOND;
     }
 
     /**
-     * Game time in seconds  elapsed since the previous frame.
+     * Game time in seconds elapsed since the previous frame.
      *
-     * @return
+     * @return time in seconds since last frame, typically around 0.03-0.05 for
+     *         a ~30 fps game. This may vary dramatically depending on the
+     *         processing speed of the computer, and the number and complexity
+     *         of objects in the game.
      */
     public static double getTimePassed() {
         return gameTimePassed / UNITS_PER_SECOND;
     }
 
     /**
-     * Real time in seconds  since the game started.
+     * Real time in seconds since the game started.
      *
-     * @return
+     * @return time in seconds
      */
     public static double getRealTimeSinceStartup() {
         return realTimeSinceStartup / UNITS_PER_SECOND;
     }
 
     /**
-     * Real time in seconds  elapsed since the previous frame.
+     * Real time in seconds elapsed since the previous frame.
      *
-     * @return
+     * @return time in seconds
      */
     public static double getRealTimePassed() {
         return realTimePassed / UNITS_PER_SECOND;
@@ -63,7 +66,7 @@ public class Time {
      * Rate of game time relative to real-time. I.e, a time rate of 0.5
      * indicates that the game is running at half-speed (in slow motion).
      *
-     * @return
+     * @return ratio of virtual seconds over real seconds
      */
     public static double getTimeRate() {
         return timeRate;
@@ -74,6 +77,7 @@ public class Time {
      * indicates that the game is running at half-speed (in slow motion).
      *
      * @param rate
+     *            ratio of virtual seconds over real seconds
      */
     public static void setTimeRate(double rate) {
         timeRate = rate;

@@ -27,7 +27,8 @@ public class KeyframeAnimation extends Curve<Orientation> implements Animation {
     /**
      * Returns a builder to create a new KeyframeAnimation.
      *
-     * @return
+     * @return KeyframeAnimationBuilder which has methods to set up and build
+     *         the animation.
      */
     public static KeyframeAnimationBuilder create() {
         return new KeyframeAnimationBuilder();
@@ -36,7 +37,7 @@ public class KeyframeAnimation extends Curve<Orientation> implements Animation {
     /**
      * Returns the duration of this animation in seconds.
      *
-     * @return
+     * @return duration in seconds
      */
     @Override
     public double getDuration() {

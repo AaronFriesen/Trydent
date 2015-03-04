@@ -32,7 +32,7 @@ public class Scale extends BaseVector<Scale> {
     }
 
     /**
-     * Creates a new scale that defaults to <1.0, 1.0>, (ie no scaling).
+     * Creates a new scale that defaults to &lt;1.0, 1.0&gt;, (ie no scaling).
      */
     public Scale() {
         this(1.0);
@@ -43,6 +43,7 @@ public class Scale extends BaseVector<Scale> {
      * scaling).
      *
      * @param other
+     *            other vector to copy the x,y components of
      */
     public Scale(BaseVector<?> other) {
         this(other.getX(), other.getY());
@@ -57,16 +58,16 @@ public class Scale extends BaseVector<Scale> {
      * Returns a copy of the input vector scaled by this scaling. E.g.:
      *
      * <pre>
-     * {
-     *     &#064;code
-     *     Position pos = new Position(1, 2);
-     *     Scale scale = new Scale(0.5);
-     *     Position scaledPos = scale.applyTo(pos); // scaledPos will now be (0.5, 1.0)
-     * }
+     * Position pos = new Position(1, 2);
+     * Scale scale = new Scale(0.5);
+     * Position scaledPos = scale.applyTo(pos); // scaledPos will now be (0.5, 1.0)
      * </pre>
      *
+     * @param <T>
+     *            the type of the vector to scale (inferred from the argument)
      * @param vector
-     * @return
+     *            vector scale
+     * @return a copy of the original vector, scaled by this vector
      */
     @SuppressWarnings("unchecked")
     public <T extends BaseVector<?>> T applyTo(T vector) {

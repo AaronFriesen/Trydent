@@ -80,8 +80,11 @@ public class GameObject {
 
     /**
      * Plays the given animation, stopping any currently playing animations.
+     * Animations modify the position, rotate, and scale of an object over time.
+     * <p>
      *
      * @param animation
+     *            the animation to play
      */
     public void playAnimation(Animation animation) {
         this.animation = animation;
@@ -93,8 +96,11 @@ public class GameObject {
     /**
      * Plays the given animation, stopping any currently playing animations, and
      * loops it count number of times.
+     * <p>
+     * Animations modify the position, rotate, and scale of an object over time.
      *
      * @param animation
+     *            the animation to loop
      * @param count
      *            The number of times to play the animation. count = 0 will not
      *            play anything, count = 1 will play the animation exactly once.
@@ -110,8 +116,12 @@ public class GameObject {
 
     /**
      * Plays the given animation in a loop forever.
+     * <p>
+     * Animations modify the position, rotation, and scale of an object over
+     * time.
      *
      * @param animation
+     *            the animation to loop
      */
     public void loopAnimation(Animation animation) {
         loopAnimation(animation, -1);
@@ -172,6 +182,7 @@ public class GameObject {
      * Sets the global orientation of this object.
      *
      * @param orientation
+     *            orientation object with position, rotation, and scale.
      */
     public void setOrientation(Orientation orientation) {
         setPosition(orientation.getPosition());
@@ -183,6 +194,7 @@ public class GameObject {
      * Sets the local orientation of this object.
      *
      * @param orientation
+     *            orientation object with position, rotation, and scale.
      */
     public void setLocalOrientation(Orientation orientation) {
         setLocalPosition(orientation.getPosition());
@@ -192,7 +204,8 @@ public class GameObject {
 
     /**
      * Returns the global orientation of this object.
-     * @return
+     *
+     * @return the orientation object containing position, rotation, and scale
      */
     public Orientation getOrientation() {
         return new Orientation(getPosition(), getRotation(), getScale());
@@ -200,7 +213,8 @@ public class GameObject {
 
     /**
      * Returns the local orientation of this object.
-     * @return
+     *
+     * @return the orientation object containing position, rotation, and scale
      */
     public Orientation getLocalOrientation() {
         return new Orientation(getLocalPosition(), getLocalRotation(), getLocalScale());
@@ -210,6 +224,7 @@ public class GameObject {
      * Sets the global position.
      *
      * @param position
+     *            the 2D position
      */
     public void setPosition(Position position) {
         try {
@@ -224,6 +239,7 @@ public class GameObject {
      * Sets the global rotation in degrees.
      *
      * @param rotation
+     *            the rotation about the Z axis
      */
     public void setRotation(double rotation) {
         double delta = rotation - getRotation();
@@ -234,6 +250,7 @@ public class GameObject {
      * Sets the global scale.
      *
      * @param scale
+     *            the 2D scale
      */
     public void setScale(Scale scale) {
         if (scale.getX() == 0 || scale.getY() == 0) {
@@ -251,6 +268,7 @@ public class GameObject {
      * position, and scale.
      *
      * @param position
+     *            the 2D position
      */
     public void setLocalPosition(Position position) {
         setTranslateMatrix(Transform.translate(position.getX(), position.getY()));
@@ -261,6 +279,7 @@ public class GameObject {
      * degrees.
      *
      * @param rotation
+     *            the rotation about the z axis
      */
     public void setLocalRotation(double rotation) {
         setRotateMatrix(new Rotate(rotation));
@@ -270,6 +289,7 @@ public class GameObject {
      * Sets the scale of this object relative to its parent's scale.
      *
      * @param scale
+     *            the 2D scale
      */
     public void setLocalScale(Scale scale) {
         if (scale.getX() == 0 || scale.getY() == 0) {
@@ -293,7 +313,9 @@ public class GameObject {
      * Translates (aka moves) this object in global space by the given amount.
      *
      * @param x
+     *            the x displacement
      * @param y
+     *            the y displacement
      */
     public void translate(double x, double y) {
         setPosition(getPosition().add(x, y));
@@ -303,6 +325,7 @@ public class GameObject {
      * Translates (aka moves) this object in global space by the given amount.
      *
      * @param by
+     *            the 2D displacement
      */
     public void translate(BaseVector<?> by) {
         translate(by.getX(), by.getY());
@@ -314,7 +337,9 @@ public class GameObject {
      * have undesirable effects (shearing) if this object has rotated children.
      *
      * @param sx
+     *            the x scale
      * @param sy
+     *            the y scale
      */
     public void scale(double sx, double sy) {
         fxNode.getTransforms().add(Transform.scale(sx, sy));
@@ -326,6 +351,7 @@ public class GameObject {
      * have undesirable effects (shearing) if this object has rotated children.
      *
      * @param scale
+     *            the 2D scale
      */
     public void scale(Scale scale) {
         scale(scale.getX(), scale.getY());
@@ -334,7 +360,8 @@ public class GameObject {
     /**
      * Returns this objects global (x, y) position.
      *
-     * @return
+     * @return the current position (changing the returned value will not affect
+     *         the position of this object)
      */
     public Position getPosition() {
         return MathTools.getTranslation(fxNode.getLocalToSceneTransform());
@@ -343,7 +370,7 @@ public class GameObject {
     /**
      * Returns this object's global rotation in degrees.
      *
-     * @return
+     * @return the 2D rotation
      */
     public double getRotation() {
         return MathTools.getRotation(fxNode.getLocalToSceneTransform());
@@ -352,7 +379,8 @@ public class GameObject {
     /**
      * Returns this object's x,y scale in global space.
      *
-     * @return
+     * @return the 2D scale (changing the returned value will not affect the
+     *         scale of this object)
      */
     public Scale getScale() {
         return MathTools.getScale(fxNode.getLocalToSceneTransform());
@@ -362,7 +390,8 @@ public class GameObject {
      * Return's this object's position relative to its parent's position,
      * rotation, and scale.
      *
-     * @return
+     * @return the 2D position (changing the returned value will not affect the
+     *         position of this object)
      */
     public Position getLocalPosition() {
         return MathTools.getTranslation(fxNode.getLocalToParentTransform());
@@ -372,7 +401,7 @@ public class GameObject {
      * Returns this object's rotation relative to its parent's rotation in
      * degrees.
      *
-     * @return
+     * @return the 2D rotation
      */
     public double getLocalRotation() {
         return MathTools.getRotation(fxNode.getLocalToParentTransform());
@@ -381,7 +410,8 @@ public class GameObject {
     /**
      * Returns this object's local (sx, sy) scale.
      *
-     * @return
+     * @return the 2D scale (changing the returned value will not affect the
+     *         scale of this object)
      */
     public Scale getLocalScale() {
         return MathTools.getScale(fxNode.getLocalToParentTransform());

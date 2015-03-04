@@ -19,6 +19,7 @@ public class ArbitraryTiming implements SplineTimingHandler {
      * (Advanced functionality).
      *
      * @param durations
+     *            array of durations as described above
      */
     public ArbitraryTiming(double[] durations) {
         this.durations = durations;

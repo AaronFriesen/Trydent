@@ -22,15 +22,10 @@ import java.util.Arrays;
  * As well as equivalent expressions like:
  *
  * <pre>
- * {
- *     &#064;code
- *     Position myPosition = new Position(3, 5);
- *     myPosition.add(new Vector(5, 7));
- *     myPosition.scale(2.0);
- * }
+ * Position myPosition = new Position(3, 5);
+ * myPosition.add(new Vector(5, 7));
+ * myPosition.scale(2.0);
  * </pre>
- *
- * </p>
  *
  * @author Garrett Malmquist
  * @param <T>
@@ -51,6 +46,7 @@ public abstract class BaseVector<T extends BaseVector<T>> {
      * the zero vector.
      *
      * @param components
+     *            the dimension of this vector (eg, 2 for 2D)
      */
     public BaseVector(int components) {
         values = new double[components];
@@ -66,7 +62,7 @@ public abstract class BaseVector<T extends BaseVector<T>> {
     /**
      * Creates a copy of this vector.
      *
-     * @return
+     * @return the copy
      */
     public abstract T copy();
 
@@ -74,7 +70,8 @@ public abstract class BaseVector<T extends BaseVector<T>> {
      * Sets all components to 'value'.
      *
      * @param value
-     * @return
+     *            floating point value
+     * @return the reference to this vector for method chaining convenience
      */
     @SuppressWarnings("unchecked")
     public T fill(double value) {
@@ -86,7 +83,7 @@ public abstract class BaseVector<T extends BaseVector<T>> {
      * Returns the number of components in this vector (aka the dimension of
      * this vector). Eg, for a 2D vector this will always be '2'.
      *
-     * @return
+     * @return the number of components
      */
     public int getComponentCount() {
         return values.length;
@@ -98,7 +95,8 @@ public abstract class BaseVector<T extends BaseVector<T>> {
      * Eg, 'x' is 0, 'y' is 1.
      *
      * @param i
-     * @return
+     *            index of the desired component
+     * @return the value of the desired component
      */
     public double getComponent(int i) {
         if (i < 0 || i >= values.length)
@@ -110,8 +108,9 @@ public abstract class BaseVector<T extends BaseVector<T>> {
      * Sets the value of the ith component.
      *
      * @param i
-     *            - index of the component to set. E.g., 'x' is 0, 'y' is 1.
+     *            index of the component to set. E.g., 'x' is 0, 'y' is 1.
      * @param value
+     *            the new value of the component
      */
     public void setComponent(int i, double value) {
         if (i < 0 || i >= values.length)
@@ -122,7 +121,7 @@ public abstract class BaseVector<T extends BaseVector<T>> {
     /**
      * Returns the x-component. Equivalent to {@code getComponent(0)}.
      *
-     * @return
+     * @return x
      */
     public double getX() {
         return values[0];
@@ -131,7 +130,7 @@ public abstract class BaseVector<T extends BaseVector<T>> {
     /**
      * Returns the y-component. Equivalent to {@code getComponent(1)}.
      *
-     * @return
+     * @return y
      */
     public double getY() {
         return values[1];
@@ -141,6 +140,7 @@ public abstract class BaseVector<T extends BaseVector<T>> {
      * Sets the x-component. Equivalent to {@code setComponent(0, value)}.
      *
      * @param v
+     *            the new value of x
      */
     public void setX(double v) {
         values[0] = v;
@@ -150,6 +150,7 @@ public abstract class BaseVector<T extends BaseVector<T>> {
      * Sets the y-component. Equivalent to {@code setComponent(1, value)}.
      *
      * @param v
+     *            the new value of y
      */
     public void setY(double v) {
         values[1] = v;
@@ -162,7 +163,7 @@ public abstract class BaseVector<T extends BaseVector<T>> {
      *
      * @param components
      *            (a variable number of double variables)
-     * @return returns itself.
+     * @return the reference to this vector for method chaining convenience
      */
     @SuppressWarnings("unchecked")
     public T set(double... components) {
@@ -179,7 +180,7 @@ public abstract class BaseVector<T extends BaseVector<T>> {
      *
      * @param other
      *            - double values to add
-     * @return returns itself.
+     * @return the reference to this vector for method chaining convenience
      */
     @SuppressWarnings("unchecked")
     public T add(double... other) {
@@ -197,7 +198,7 @@ public abstract class BaseVector<T extends BaseVector<T>> {
      *
      * @param other
      *            - other vector
-     * @return returns itself.
+     * @return the reference to this vector for method chaining convenience
      */
     public T add(BaseVector<?> other) {
         return add(other.values);
@@ -212,6 +213,7 @@ public abstract class BaseVector<T extends BaseVector<T>> {
      *            - scalar number
      * @param other
      *            - other vector
+     * @return the reference to this vector for method chaining convenience
      */
     @SuppressWarnings("unchecked")
     public T add(double scale, BaseVector<?> other) {
@@ -229,7 +231,7 @@ public abstract class BaseVector<T extends BaseVector<T>> {
      *
      * @param other
      *            - double values to subtract
-     * @return returns itself.
+     * @return the reference to this vector for method chaining convenience
      */
     @SuppressWarnings("unchecked")
     public T subtract(double... other) {
@@ -247,7 +249,7 @@ public abstract class BaseVector<T extends BaseVector<T>> {
      *
      * @param other
      *            - other vector to subtract
-     * @return returns itself.
+     * @return the reference to this vector for method chaining convenience
      */
     public T subtract(BaseVector<?> other) {
         return subtract(other.values);
@@ -259,9 +261,10 @@ public abstract class BaseVector<T extends BaseVector<T>> {
      * this = this - (scale * other).
      *
      * @param scale
-     *            - scalar number
+     *            scalar number
      * @param other
-     *            - other vector
+     *            other vector
+     * @return the reference to this vector for method chaining convenience
      */
     @SuppressWarnings("unchecked")
     public T subtract(double scale, BaseVector<?> other) {
@@ -286,7 +289,8 @@ public abstract class BaseVector<T extends BaseVector<T>> {
      * </pre>
      *
      * @param scale
-     * @return
+     *            the values to element-wise multiply this vector by
+     * @return the reference to this vector for method chaining convenience
      */
     @SuppressWarnings("unchecked")
     public T scale(double... scale) {
@@ -313,7 +317,9 @@ public abstract class BaseVector<T extends BaseVector<T>> {
      * </pre>
      *
      * @param other
-     * @return
+     *            the vector to element-wise multiply the components of this
+     *            vector by
+     * @return the reference to this vector for method chaining convenience
      */
     public T scale(BaseVector<?> other) {
         return scale(other.values);
@@ -325,8 +331,8 @@ public abstract class BaseVector<T extends BaseVector<T>> {
      * (In the case of points, rotates in 2D about the origin).
      *
      * @param angle
-     *            - amount to rotate by, in degrees.
-     * @return
+     *            amount to rotate by, in degrees.
+     * @return the reference to this vector for method chaining convenience
      */
     @SuppressWarnings("unchecked")
     public T rotate2D(double angle) {
@@ -346,7 +352,7 @@ public abstract class BaseVector<T extends BaseVector<T>> {
     /**
      * Rotates this vector 90 counter-clockwise in 2D.
      *
-     * @return
+     * @return the reference to this vector for method chaining convenience
      */
     public T rotate90() {
         return set(-getY(), getX());
@@ -355,7 +361,7 @@ public abstract class BaseVector<T extends BaseVector<T>> {
     /**
      * Returns the magnitude (aka length, aka norm) of this vector.
      *
-     * @return
+     * @return the magnitude
      */
     public double magnitude() {
         return Math.sqrt(magnitudeSquared());
@@ -364,7 +370,7 @@ public abstract class BaseVector<T extends BaseVector<T>> {
     /**
      * Returns the squared magnitude (magnitude^2) of this vector.
      *
-     * @return
+     * @return the squared magnitude
      */
     public double magnitudeSquared() {
         return dot(this);
@@ -374,7 +380,7 @@ public abstract class BaseVector<T extends BaseVector<T>> {
      * Normalizes this vector (aka makes it unit length, aka makes its length =
      * 1).
      *
-     * @return
+     * @return the reference to this vector for method chaining convenience
      */
     @SuppressWarnings("unchecked")
     public T normalize() {
@@ -389,11 +395,11 @@ public abstract class BaseVector<T extends BaseVector<T>> {
      * by an amount t. (Advanced functionality).
      *
      * @param t
-     *            - interpolation parameter (0 will give this vector, 1 will
-     *            give the other vector, 0.5 is the midpoint.)
+     *            interpolation parameter (0 will give this vector, 1 will give
+     *            the other vector, 0.5 is the midpoint.)
      * @param other
-     *            - the other vector
-     * @return
+     *            the other vector
+     * @return the interpolated point
      */
     @SuppressWarnings("unchecked")
     public T lerp(double t, BaseVector<?> other) {
@@ -408,7 +414,8 @@ public abstract class BaseVector<T extends BaseVector<T>> {
      * Returns the dot-product between the two vectors.
      *
      * @param other
-     * @return
+     *            the other vector
+     * @return the dot-product
      */
     public double dot(BaseVector<?> other) {
         return dot(other.values);
@@ -418,8 +425,8 @@ public abstract class BaseVector<T extends BaseVector<T>> {
      * Returns the dot-product between the two vectors.
      *
      * @param other
-     *            - other vector, specified as a list of doubles.
-     * @return
+     *            other vector, specified as a list of doubles.
+     * @return the dot-product
      */
     public double dot(double... other) {
         checkComponents(other);

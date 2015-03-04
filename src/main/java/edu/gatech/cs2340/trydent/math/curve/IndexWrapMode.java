@@ -7,16 +7,16 @@ package edu.gatech.cs2340.trydent.math.curve;
 public interface IndexWrapMode {
 
     /**
-     * If 0 <= index <= size-1, this just returns the index. Otherwise, it
+     * If 0 &lt;= index &lt;= size-1, this just returns the index. Otherwise, it
      * applies some strategy to convert index to a value between 0 and size-1
      * (inclusive), depending on the subclass.
      *
      * @param index
-     *            - index (possibly out-of-bounds) to index.
+     *            index (possibly out-of-bounds) to index.
      * @param size
-     *            - (maximum value of index) + 1, eg the length of an array
-     *            index is for.
-     * @return
+     *            (maximum value of index) + 1, eg the length of an array index
+     *            is for.
+     * @return the index, wrapped as necessary
      */
     int handle(int index, int size);
 

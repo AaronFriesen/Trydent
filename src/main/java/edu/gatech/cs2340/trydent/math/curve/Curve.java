@@ -5,6 +5,7 @@ package edu.gatech.cs2340.trydent.math.curve;
  * functionality).
  *
  * @param <T>
+ *            the type of points this curve interpolates
  */
 public abstract class Curve<T> {
     /**
@@ -13,7 +14,7 @@ public abstract class Curve<T> {
      * @param t
      *            curve parameter, where t=0 returns the first point, and t=1
      *            returns the last point.
-     * @return
+     * @return point along the curve at position t.
      */
     public abstract T sample(double t);
 
