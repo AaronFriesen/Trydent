@@ -1,7 +1,7 @@
 #!/bin/bash
 
 cdir=`pwd`
-branch=`git branch | grep '*' | pam "after(s, ' ').strip()"`
+branch=`git rev-parse --abbrev-ref HEAD`
 clone=~/trydent-temp-dir/TrydentEngine
 archive=~/trydent-temp-dir/temp-trydent-javadoc.tar
 
