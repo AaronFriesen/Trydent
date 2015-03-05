@@ -1,0 +1,35 @@
+#!/bin/bash
+
+cdir=`pwd`
+branch=`git branch | grep '*' | pam "after(s, ' ').strip()"`
+clone=~/trydent-temp-dir/TrydentEngine
+archive=~/trydent-temp-dir/temp-trydent-javadoc.tar
+
+mkdir ~/trydent-temp-dir
+
+# This is here so that if something goes wrong, we don't erase
+# anything important.
+mkdir safety-dir
+cd safety-dir
+
+git clone https://github.com/AaronFriesen/Trydent.git $clone
+cd $clone
+git checkout $branch
+gradle clean
+gradle javadoc
+cd build/docs/javadoc
+tar -cvf $archive *
+cd $clone
+git checkout gh-pages
+rm -rf "$clone/*"
+git ls-files --deleted | xargs git rm
+tar -xvf $archive 
+tar -tf $archive | xargs git add
+rm "$archive"
+git commit -am "Updating javadocs for github.io."
+git push origin gh-pages
+cd $cdir
+cd safety-dir
+rm -rf ~/trydent-temp-dir
+cd $cdir
+rmdir safety-dir
