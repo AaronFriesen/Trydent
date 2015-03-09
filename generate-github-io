@@ -14,7 +14,9 @@ cd safety-dir
 
 git clone https://github.com/AaronFriesen/Trydent.git $clone
 cd $clone
-git checkout $branch
+git checkout master # Checkout out master instead of $branch to avoid
+                    # unintended changes, and javadocs being out of sync
+                    # with master branch.
 gradle clean
 gradle javadoc
 cd build/docs/javadoc
