@@ -7,7 +7,9 @@ import edu.gatech.cs2340.trydent.internal.Adapter;
  * using an adapter strategy. (Advanced functionality).
  *
  * @param <A>
+ *            type of points in the stream to draw from
  * @param <B>
+ *            type that the points should be converted to
  */
 public class AdaptedPointStream<A, B> extends PointStream<B> {
 
@@ -37,6 +39,7 @@ public class AdaptedPointStream<A, B> extends PointStream<B> {
      * Sets the point-stream this stream is drawing instances of A from.
      *
      * @param stream
+     *            point stream to draw from
      */
     public void setStream(PointStream<A> stream) {
         this.stream = stream;
@@ -49,6 +52,7 @@ public class AdaptedPointStream<A, B> extends PointStream<B> {
      * Sets the strategy used to convert instances of A to instances of B.
      *
      * @param adapter
+     *            adapter
      */
     public void setAdapter(Adapter<A, B> adapter) {
         this.adapter = adapter;

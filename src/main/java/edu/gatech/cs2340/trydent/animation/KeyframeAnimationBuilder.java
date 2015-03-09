@@ -33,7 +33,8 @@ public class KeyframeAnimationBuilder {
      * Sets the position of the current keyframe.
      *
      * @param position
-     * @return
+     *            2D position
+     * @return the builder, for method chaining
      */
     public KeyframeAnimationBuilder setPosition(Position position) {
         buildingFrame.setPosition(position);
@@ -44,7 +45,8 @@ public class KeyframeAnimationBuilder {
      * Shifts the current keyframe by the given translation.
      *
      * @param translation
-     * @return
+     *            amount to add to the current keyframe's position
+     * @return the builder, for method chaining
      */
     public KeyframeAnimationBuilder moveBy(Position translation) {
         buildingFrame.setPosition(buildingFrame.getPosition().add(translation));
@@ -55,8 +57,8 @@ public class KeyframeAnimationBuilder {
      * Sets the rotation of the current keyframe.
      *
      * @param rotation
-     *            - rotation in degrees.
-     * @return
+     *            rotation in degrees.
+     * @return the builder for method chaining
      */
     public KeyframeAnimationBuilder setRotation(double rotation) {
         buildingFrame.setRotation(rotation);
@@ -67,8 +69,8 @@ public class KeyframeAnimationBuilder {
      * Rotates the current keyframe.
      *
      * @param rotation
-     *            - amount to rotate in degrees.
-     * @return
+     *            amount to rotate in degrees.
+     * @return the builder, for method chaining
      */
     public KeyframeAnimationBuilder rotateBy(double rotation) {
         buildingFrame.setRotation(buildingFrame.getRotation() + rotation);
@@ -79,7 +81,8 @@ public class KeyframeAnimationBuilder {
      * Sets the scale of the current keyframe, with (1,1) being no scale.
      *
      * @param scale
-     * @return
+     *            the new scale
+     * @return the builder, for method chaining
      */
     public KeyframeAnimationBuilder setScale(Scale scale) {
         buildingFrame.setScale(scale);
@@ -90,7 +93,8 @@ public class KeyframeAnimationBuilder {
      * Scales the current keyframe.
      *
      * @param scale
-     * @return
+     *            the vector to multiply the current scale by
+     * @return the builder, for method chaining
      */
     public KeyframeAnimationBuilder scaleBy(Scale scale) {
         buildingFrame.setScale(buildingFrame.getScale().scale(scale));
@@ -101,7 +105,8 @@ public class KeyframeAnimationBuilder {
      * Sets the position, rotation, and scale of the current keyframe.
      *
      * @param orientation
-     * @return
+     *            the new orientation
+     * @return the builder, for method chaining
      */
     public KeyframeAnimationBuilder setOrientation(Orientation orientation) {
         buildingFrame.setPosition(orientation.getPosition());
@@ -113,10 +118,11 @@ public class KeyframeAnimationBuilder {
     /**
      * Sets the interpolation strategy used to generate in-between frames. This
      * defaults to Interpolation.SMOOTH and for most uses will not need to be
-     * changed.
+     * changed. (Advanced functionality)
      *
      * @param interpolation
-     * @return
+     *            interpolationg strategy.
+     * @return the builder, for method chaining
      */
     public KeyframeAnimationBuilder setInterpolation(Interpolation<BaseVector<?>> interpolation) {
         buildingFrame.interpolation = interpolation;
@@ -127,10 +133,10 @@ public class KeyframeAnimationBuilder {
      * Adds a new keyframe at the current position, rotation, and scale.
      *
      * @param duration
-     *            - Time in seconds it should take for the animation to get from
+     *            Time in seconds it should take for the animation to get from
      *            this keyframe to the one after it. For the final keyframe,
      *            this value is ignored, as the final keyframe has no duration.
-     * @return
+     * @return the builder, for method chaining
      */
     public KeyframeAnimationBuilder addKeyframe(double duration) {
         buildingFrame.duration = duration;
@@ -153,7 +159,7 @@ public class KeyframeAnimationBuilder {
      * automatically change the duration of this frame and other zero-duration
      * frames to appropriately fill in the remaining time.
      *
-     * @return
+     * @return the builder, for method chaining
      */
     public KeyframeAnimationBuilder addKeyframe() {
         return addKeyframe(0);
@@ -167,7 +173,8 @@ public class KeyframeAnimationBuilder {
      * in the gaps in time, and the other frames will be left alone.
      *
      * @param duration
-     * @return
+     *            the desired duration for the total animation
+     * @return the builder, for method chaining
      */
     public KeyframeAnimationBuilder setTotalDuration(double duration) {
         if (duration <= 0) {
@@ -182,7 +189,8 @@ public class KeyframeAnimationBuilder {
      * beginning when it ends.
      *
      * @param circular
-     * @return
+     *            if true, the animation will loop.
+     * @return the builder, for method training
      */
     public KeyframeAnimationBuilder setAnimationCircular(boolean circular) {
         this.circular = circular;
@@ -192,7 +200,8 @@ public class KeyframeAnimationBuilder {
     /**
      * Builds and returns a KeyframeAnimation with the given keyframes.
      *
-     * @return
+     * @return the constructed KeyframeAnimation using the keyframes previously
+     *         defined.
      */
     public KeyframeAnimation build() {
         if (keyframes.isEmpty())

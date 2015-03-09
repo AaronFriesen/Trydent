@@ -2,6 +2,7 @@ package edu.gatech.cs2340.trydent;
 
 /**
  * General TrydentEngine exception
+ *
  * @author Garrett Malmquist
  */
 public class TrydentException extends RuntimeException {

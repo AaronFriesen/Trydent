@@ -6,6 +6,7 @@ import edu.gatech.cs2340.trydent.TrydentException;
  * Represents a parametric spline of points. (Advanced functionality).
  *
  * @param <P>
+ *            the type of the control points of this spline
  */
 public class SplineCurve<P> extends Curve<P> {
 
@@ -80,6 +81,7 @@ public class SplineCurve<P> extends Curve<P> {
      * Sets the interpolation strategy used by this spline.
      *
      * @param interpolation
+     *            typically one of the constants in Interpolation
      */
     public void setInterpolation(Interpolation<P> interpolation) {
         this.interpolation = interpolation;
@@ -89,6 +91,7 @@ public class SplineCurve<P> extends Curve<P> {
      * Sets the index wrapping used by this spline.
      *
      * @param handler
+     *            typically one of the constants in IndexWrapMode
      */
     public void setIndexWrap(IndexWrapMode handler) {
         this.pointStream.setBoundsHandler(handler);
@@ -98,6 +101,7 @@ public class SplineCurve<P> extends Curve<P> {
      * Sets the time wrapping used by this spline.
      *
      * @param mode
+     *            typically one of the constants in TimeWrapMode
      */
     public void setTimeWrap(TimeWrapMode mode) {
         this.timeWrap = mode;

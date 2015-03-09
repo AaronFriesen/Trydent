@@ -24,7 +24,7 @@ public class SpanTime {
     /**
      * Returns the index of the span.
      *
-     * @return
+     * @return the span index
      */
     public int getIndex() {
         return index;
@@ -34,7 +34,7 @@ public class SpanTime {
      * Returns the position along the span, with 0 being the start of the span,
      * and 1 being the end.
      *
-     * @return
+     * @return the "time" (aka distance along the curve)
      */
     public double getTime() {
         return time;

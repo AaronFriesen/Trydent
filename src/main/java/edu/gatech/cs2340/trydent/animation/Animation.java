@@ -11,12 +11,21 @@ import edu.gatech.cs2340.trydent.math.curve.TimeWrapMode;
  */
 public interface Animation {
 
-    /** Returns the duration in seconds. */
+    /**
+     * Returns the duration in seconds.
+     *
+     * @return the duration of this animation
+     */
     double getDuration();
 
     /**
      * Samples the Orientation of this animation at the given time between 0 and
      * duration.
+     *
+     * @param time
+     *            between 0 and duration
+     * @return returns the interpolated orientation (aka the translation,
+     *         rotate, and scale of the animation at the given time).
      */
     Orientation sample(double time);
 
@@ -25,6 +34,7 @@ public interface Animation {
      * of the range 0 ... # frames.
      *
      * @param mode
+     *            wrap mode
      */
     void setIndexWrap(IndexWrapMode mode);
 
@@ -33,6 +43,7 @@ public interface Animation {
      * ... duration.
      *
      * @param mode
+     *            wrap mode
      */
     void setTimeWrap(TimeWrapMode mode);
 

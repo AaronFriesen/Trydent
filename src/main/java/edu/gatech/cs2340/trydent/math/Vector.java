@@ -14,7 +14,9 @@ public class Vector extends BaseVector<Vector> {
      * Creates a new 2D vector pointing in the direction dx, dy.
      *
      * @param dx
+     *            x-direction
      * @param dy
+     *            y-direction
      */
     public Vector(double dx, double dy) {
         super(2);
@@ -22,7 +24,7 @@ public class Vector extends BaseVector<Vector> {
     }
 
     /**
-     * Creates a new vector pointing nowhere <0, 0>.
+     * Creates a new vector pointing nowhere &lt;0, 0&gt;.
      */
     public Vector() {
         super(2);
@@ -33,6 +35,7 @@ public class Vector extends BaseVector<Vector> {
      * Position, etc).
      *
      * @param other
+     *            other vector to copy the x,y components of
      */
     public Vector(BaseVector<?> other) {
         this(other.getX(), other.getY());

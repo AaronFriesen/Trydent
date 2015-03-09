@@ -11,6 +11,7 @@ public class UniformTiming implements SplineTimingHandler {
      * Creates a new uniform timing for the given number of points (or frames).
      *
      * @param pointCount
+     *            the number of points (aka frames)
      */
     public UniformTiming(int pointCount) {
         this.pointCount = pointCount;

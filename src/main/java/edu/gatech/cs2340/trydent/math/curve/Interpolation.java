@@ -9,6 +9,7 @@ import edu.gatech.cs2340.trydent.math.MathTools;
  * @author Garrett Malmquist
  *
  * @param <T>
+ *            the type of object to interpolate
  */
 public interface Interpolation<T> {
 
@@ -21,7 +22,7 @@ public interface Interpolation<T> {
      *            points.next().
      * @param points
      *            - abstract polyline to interpolate along.
-     * @return
+     * @return the interpolated point of type T
      */
     T interpolate(double t, PointStream<T> points);
 

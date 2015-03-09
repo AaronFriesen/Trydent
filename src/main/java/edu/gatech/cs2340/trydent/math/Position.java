@@ -15,7 +15,9 @@ public class Position extends BaseVector<Position> {
      * Creates a new 2D position.
      *
      * @param x
+     *            x-component of the 2D position
      * @param y
+     *            y-component of the 2D position
      */
     public Position(double x, double y) {
         super(2);
@@ -39,6 +41,7 @@ public class Position extends BaseVector<Position> {
      * Position, Vector, etc).
      *
      * @param other
+     *            vector to extract the components from
      */
     public Position(BaseVector<?> other) {
         this(other.getX(), other.getY());

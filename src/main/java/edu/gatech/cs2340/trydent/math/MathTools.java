@@ -21,7 +21,8 @@ public class MathTools {
      * Takes an angle in degrees and wraps it to the range 0 - 360.
      *
      * @param theta
-     * @return
+     *            angle in degrees to wrap if necessary
+     * @return the wrapped angle in degrees (between 0 and 360)
      */
     public static double wrapAngle(double theta) {
         if (theta < 0)
@@ -35,11 +36,13 @@ public class MathTools {
      * distance is shorter.
      *
      * @param thetaA
+     *            starting angle (at t=0)
      * @param thetaB
+     *            ending angle (at t=1)
      * @param t
-     *            - interpolation parameter, where t=0 returns thetaA, and t=1
+     *            interpolation parameter, where t=0 returns thetaA, and t=1
      *            returns thetaB.
-     * @return
+     * @return the interpolated angle, wrapped to be between 0 and 360.
      */
     public static double degreeLerp(double thetaA, double thetaB, double t) {
         thetaA = wrapAngle(thetaA);
@@ -65,11 +68,13 @@ public class MathTools {
      * (Advanced functionality).
      *
      * @param t
-     *            - interpolation parameter - t=0.0 will return the 1st point,
+     *            interpolation parameter - t=0.0 will return the 1st point,
      *            t=1.0 will return the last point.
      * @param points
-     *            - One or more points to interpolate between.
-     * @return
+     *            One or more points to interpolate between.
+     * @param <T>
+     *            type of point
+     * @return the interpolated point
      */
     @SuppressWarnings("unchecked")
     public static <T extends BaseVector<?>> T bezier(double t, T... points) {
@@ -100,12 +105,20 @@ public class MathTools {
      * Modified lerp that passes through point 'start' at time t=a and point
      * 'end' at time t=b. (Advanced functionality).
      *
+     * @param <T>
+     *            the type of the point to interpolate (inferred from other
+     *            arguments)
      * @param a
+     *            starting time
      * @param start
+     *            starting point
      * @param b
+     *            ending time
      * @param end
+     *            ending point
      * @param t
-     * @return
+     *            interpolation parameter time
+     * @return interpolated point at time t
      */
     @SuppressWarnings("unchecked")
     public static <T extends BaseVector<?>> T lerp(double a, T start, double b, T end, double t) {
@@ -116,10 +129,16 @@ public class MathTools {
      * Linear interpolation from start to end at time t. (Advanced
      * functionality).
      *
+     * @param <T>
+     *            the type of the point to interpolate (inferred from the other
+     *            arguments)
      * @param start
+     *            start point at t=0
      * @param end
+     *            end point at t=1
      * @param t
-     * @return
+     *            interpolation parameter
+     * @return interpolated point
      */
     @SuppressWarnings("unchecked")
     public static <T extends BaseVector<?>> T lerp(T start, T end, double t) {
@@ -132,16 +151,16 @@ public class MathTools {
      * {@code P(t) = (2t^3-3t^2+1)P0+(t^3-2t^2+t)T0+(-2t^3+3t^2)P1+(t^3-t^2)T1 }
      *
      * @param p0
-     *            - first point
+     *            first point
      * @param t0
-     *            - first tangent
+     *            first tangent
      * @param p1
-     *            - second point
+     *            second point
      * @param t1
-     *            - second tangent
+     *            second tangent
      * @param t
-     *            - interpolation parameter (P(t=0) = p0, P(t=1) = p1)
-     * @return
+     *            interpolation parameter (P(t=0) = p0, P(t=1) = p1)
+     * @return interpolated floating point value
      */
     public static double hermite(double p0, double t0, double p1, double t1, double t) {
         double t2 = t * t;
@@ -154,17 +173,20 @@ public class MathTools {
      * <p>
      * {@code P(t) = (2t^3-3t^2+1)P0+(t^3-2t^2+t)T0+(-2t^3+3t^2)P1+(t^3-t^2)T1 }
      *
+     * @param <T>
+     *            the type of the point to interpolate (inferred from the other
+     *            arguments)
      * @param p0
-     *            - first point
+     *            first point
      * @param t0
-     *            - first tangent
+     *            first tangent
      * @param p1
-     *            - second point
+     *            second point
      * @param t1
-     *            - second tangent
+     *            second tangent
      * @param t
-     *            - interpolation parameter (P(t=0) = p0, P(t=1) = p1)
-     * @return
+     *            interpolation parameter (P(t=0) = p0, P(t=1) = p1)
+     * @return interpolated point
      */
     @SuppressWarnings("unchecked")
     public static <T extends BaseVector<?>> T hermite(T p0, BaseVector<?> t0, T p1, BaseVector<?> t1, double t) {
@@ -180,7 +202,9 @@ public class MathTools {
      * Returns the 2D rotation of the matrix in degrees.
      *
      * @param matrix
-     * @return
+     *            rotation matrix from which to extract the rotation about the
+     *            z-axis
+     * @return the rotation about the Z axis in degrees
      */
     public static double getRotation(Transform matrix) {
         // [ xx xy xz tx ] = [ Sx*c -Sy*s ... tx ]
@@ -196,7 +220,8 @@ public class MathTools {
      * Returns the X scale of the matrix.
      *
      * @param matrix
-     * @return
+     *            matrix to extract the x scale from
+     * @return the x scaling of the transformation matrix
      */
     public static double getScaleX(Transform matrix) {
         // [ xx xy xz tx ] = [ Sx*c -Sy*s ... tx ]
@@ -211,7 +236,8 @@ public class MathTools {
      * Returns the Y scale of the matrix.
      *
      * @param matrix
-     * @return
+     *            matrix to extract the y scale from
+     * @return the y-scale of the matrix
      */
     public static double getScaleY(Transform matrix) {
         // [ xx xy xz tx ] = [ Sx*c -Sy*s ... tx ]
@@ -226,7 +252,8 @@ public class MathTools {
      * Returns the x, y scale of the transform.
      *
      * @param matrix
-     * @return
+     *            the matrix from which to extract the x,y scaling
+     * @return the (x,y) scale of the matrix as a Scale object
      */
     public static Scale getScale(Transform matrix) {
         return new Scale(getScaleX(matrix), getScaleY(matrix));
@@ -236,7 +263,8 @@ public class MathTools {
      * Returns the translation of the matrix.
      *
      * @param matrix
-     * @return
+     *            the matrix to extract the translation from
+     * @return a position representation the translation of the matrix
      */
     public static Position getTranslation(Transform matrix) {
         return new Position(matrix.getTx(), matrix.getTy());
