@@ -13,6 +13,7 @@ public class TrydentException extends RuntimeException {
     public TrydentException(String message) {
         super(message);
     }
+
     public TrydentException(String message, Exception nestedException) {
         super(message, nestedException);
     }

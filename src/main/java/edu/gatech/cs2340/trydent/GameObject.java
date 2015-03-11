@@ -28,7 +28,7 @@ public class GameObject {
 
     private String name = "Untitled GameObject";
 
-    protected Group fxNode;
+    private Group fxNode;
     private GameObject parent;
 
     private Transform localRotate;
@@ -415,6 +415,16 @@ public class GameObject {
      */
     public Scale getLocalScale() {
         return MathTools.getScale(fxNode.getLocalToParentTransform());
+    }
+
+    /**
+     * Returns this object's underlying JavaFX Group object. This allows child classes to modify some properties
+     * directly, such as the children list. This should be used with caution, to avoid breaking Trydent's scene graph.
+     *
+     * @return
+     */
+    protected Group getFxNode() {
+        return fxNode;
     }
 
     public boolean isChildOf(GameObject object) {

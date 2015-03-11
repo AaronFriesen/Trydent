@@ -8,15 +8,19 @@ import javafx.scene.image.ImageView;
  */
 public class Sprite extends GameObject {
 
+    // TODO: Add setTime(double) and play/pause/loop functionality
+
     private Image[] images;
     private ImageView currentView;
 
     public Sprite(String filename) {
         this(new String[]{filename}, 0);
     }
+
     public Sprite(String filename, String name) {
         this(new String[]{filename}, 0, name);
     }
+
     public Sprite(String[] filenames, double duration) {
         super();
         if (filenames.length == 0)
@@ -24,6 +28,7 @@ public class Sprite extends GameObject {
         loadImages(filenames);
         initImageView(duration);
     }
+
     public Sprite(String[] filenames, double duration, String name) {
         super(name);
         if (filenames.length == 0)
@@ -55,7 +60,7 @@ public class Sprite extends GameObject {
                 }
             };
         }
-        fxNode.getChildren().add(currentView);
+        getFxNode().getChildren().add(currentView);
     }
 
     public double getHeight() {
