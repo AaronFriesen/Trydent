@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.gatech.cs2340.trydent.sample.tictactoe.TitleScreenController">
+   <top>
+      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </top>
+   <left>
+      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </right>
+   <bottom>
+      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </bottom>
+   <center>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="193.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="start1" mnemonicParsing="false" onAction="#toGameScreen" text="Start Game (GUI)" />
+            <Button fx:id="start2" mnemonicParsing="false" onAction="#toGameScreen2" text="Start Game (KEY)" />
+            <Button fx:id="start3" mnemonicParsing="false" onAction="#toGameScreen3" text="Start Game (MOS)" />
+         </children>
+      </VBox>
+   </center>
+</BorderPane>

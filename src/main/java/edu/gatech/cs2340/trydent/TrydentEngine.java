@@ -54,6 +54,8 @@ public class TrydentEngine {
                 quit();
             }
             Time.updateTime();
+            Keyboard.newFrame();
+            Mouse.newFrame();
         } else {
             cleanup();
         }
