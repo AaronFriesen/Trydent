@@ -16,8 +16,8 @@ import edu.gatech.cs2340.trydent.ContinuousEvent;
 import edu.gatech.cs2340.trydent.GameObject;
 import edu.gatech.cs2340.trydent.Keyboard;
 import edu.gatech.cs2340.trydent.Mouse;
-import edu.gatech.cs2340.trydent.OneTimeEvent;
 import edu.gatech.cs2340.trydent.TrydentEngine;
+import edu.gatech.cs2340.trydent.internal.MouseImpl;
 import edu.gatech.cs2340.trydent.log.Log;
 import edu.gatech.cs2340.trydent.math.Position;
 
@@ -33,6 +33,7 @@ public class TitleScreenController {
     private boolean started2;
     private boolean started3;
     private Map<String, Rectangle> tiles;
+    private Map<KeyCode, String> keyToName;
     private Set<Rectangle> used;
     private boolean player;
 
@@ -51,28 +52,14 @@ public class TitleScreenController {
     }
 
     private void handleKeyboard() {
-        Rectangle target;
-        if(Keyboard.isKeyDownOnce(KeyCode.Q)){
-            target = tiles.get("0_0");
-        } else if(Keyboard.isKeyDownOnce(KeyCode.A)){
-            target = tiles.get("0_1");
-        } else if(Keyboard.isKeyDownOnce(KeyCode.Z)){
-            target = tiles.get("0_2");
-        } else if(Keyboard.isKeyDownOnce(KeyCode.W)){
-            target = tiles.get("1_0");
-        } else if(Keyboard.isKeyDownOnce(KeyCode.S)){
-            target = tiles.get("1_1");
-        } else if(Keyboard.isKeyDownOnce(KeyCode.X)){
-            target = tiles.get("1_2");
-        } else if(Keyboard.isKeyDownOnce(KeyCode.E)){
-            target = tiles.get("2_0");
-        } else if(Keyboard.isKeyDownOnce(KeyCode.D)){
-            target = tiles.get("2_1");
-        } else if(Keyboard.isKeyDownOnce(KeyCode.C)){
-            target = tiles.get("2_2");
-        } else {
-            target = null;
+        Rectangle target = null;
+        for(KeyCode key : keyToName.keySet()){
+            if(Keyboard.isKeyDownOnce(key)) {
+                target = tiles.get(keyToName.get(key));
+                break;
+            }
         }
+
         if(target != null && !used.contains(target)) {
             if(player) {
                 target.setFill(Color.RED);
@@ -89,7 +76,7 @@ public class TitleScreenController {
             for(int i = 0; i < 3; i++){
                 for(int j = 0; j < 3; j++){
                     Rectangle target = tiles.get(i + "_" + j);
-                    if(target.contains(target.sceneToLocal(Mouse.getMouseX(), Mouse.getMouseY()))
+                    if(target.contains(target.sceneToLocal(MouseImpl.getMouseX(), MouseImpl.getMouseY()))
                             && !used.contains(target)) {
                         if(player) {
                             target.setFill(Color.RED);
@@ -106,7 +93,7 @@ public class TitleScreenController {
 
     @FXML
     private void toGameScreen(ActionEvent event) {
-        OneTimeEvent.simplified(() -> {
+        TrydentEngine.runLater(() -> {
                 if(started2 || started3) return;
                 Log.debug("Switching to game screen.");
                 TrydentEngine.setForeground(getClass().getResource("TicTacToeGameScreen.fxml"));
@@ -122,9 +109,20 @@ public class TitleScreenController {
                 String name = i + "_" + j;
                 Rectangle rect = new Rectangle(50, 50, Color.BLACK);
                 tiles.put(name, rect);
-                (new GameObject(name, rect)).setPosition(new Position(i * 60, j * 60));
+                new GameObject(name, rect).setPosition(new Position(i * 60, j * 60));
             }
         }
+        keyToName = new HashMap<>();
+        keyToName.put(KeyCode.Q, "0_0");
+        keyToName.put(KeyCode.A, "0_1");
+        keyToName.put(KeyCode.Z, "0_2");
+        keyToName.put(KeyCode.W, "1_0");
+        keyToName.put(KeyCode.S, "1_1");
+        keyToName.put(KeyCode.X, "1_2");
+        keyToName.put(KeyCode.E, "2_0");
+        keyToName.put(KeyCode.D, "2_1");
+        keyToName.put(KeyCode.C, "2_2");
+
         start1.setOpacity(0);
         start2.setOpacity(0);
         start3.setOpacity(0);
@@ -132,7 +130,7 @@ public class TitleScreenController {
 
     @FXML
     private void toGameScreen2(ActionEvent event) {
-        OneTimeEvent.simplified(() -> {
+        TrydentEngine.runLater(() -> {
                 if(started2 || started3) return;
                 Log.debug("Started game type 2.");
                 initEventScreen();
@@ -143,7 +141,7 @@ public class TitleScreenController {
 
     @FXML
     private void toGameScreen3(ActionEvent event) {
-        OneTimeEvent.simplified(() -> {
+        TrydentEngine.runLater(() -> {
                 if(started2 || started3) return;
                 Log.debug("Started game type 3.");
                 initEventScreen();

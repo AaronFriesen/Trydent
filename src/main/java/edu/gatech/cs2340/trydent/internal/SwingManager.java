@@ -19,8 +19,7 @@ import javafx.util.Duration;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-import edu.gatech.cs2340.trydent.Keyboard;
-import edu.gatech.cs2340.trydent.Mouse;
+import edu.gatech.cs2340.trydent.ContinuousEvent;
 import edu.gatech.cs2340.trydent.log.Log;
 
 public class SwingManager implements JavaFXManager {
@@ -96,12 +95,20 @@ public class SwingManager implements JavaFXManager {
     }
 
     private void addEventHooks() {
-        root.addEventHandler(KeyEvent.KEY_PRESSED, event -> Keyboard.pressed(event.getCode()));
-        root.addEventHandler(KeyEvent.KEY_RELEASED, event -> Keyboard.released(event.getCode()));
-        root.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> Mouse.pressed(event));
-        root.addEventHandler(MouseEvent.MOUSE_RELEASED, event -> Mouse.released(event));
-        root.addEventHandler(MouseEvent.MOUSE_MOVED, event -> Mouse.moved(event));
-        root.addEventHandler(MouseEvent.MOUSE_DRAGGED, event -> Mouse.dragged(event));
+        root.addEventHandler(KeyEvent.KEY_PRESSED, event -> KeyboardImpl.pressed(event.getCode()));
+        root.addEventHandler(KeyEvent.KEY_RELEASED, event -> KeyboardImpl.released(event.getCode()));
+        root.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> MouseImpl.pressed(event));
+        root.addEventHandler(MouseEvent.MOUSE_RELEASED, event -> MouseImpl.released(event));
+        root.addEventHandler(MouseEvent.MOUSE_MOVED, event -> MouseImpl.moved(event));
+        root.addEventHandler(MouseEvent.MOUSE_DRAGGED, event -> MouseImpl.dragged(event));
+
+        new ContinuousEvent(){
+            @Override
+            public void onUpdate() {
+                MouseImpl.newFrame();
+                KeyboardImpl.newFrame();
+            }
+        };
     }
 
     @Override

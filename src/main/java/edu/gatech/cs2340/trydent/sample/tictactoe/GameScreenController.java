@@ -5,7 +5,7 @@ import java.util.Arrays;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import edu.gatech.cs2340.trydent.OneTimeEvent;
+import edu.gatech.cs2340.trydent.TrydentEngine;
 import edu.gatech.cs2340.trydent.log.Log;
 
 public class GameScreenController {
@@ -31,8 +31,8 @@ public class GameScreenController {
     private boolean player;
 
     public GameScreenController() {
-        Log.debug("Initialized tic-tac-toe game screen.");
-        OneTimeEvent.simplified(() -> {
+        TrydentEngine.runLater(() -> {
+                Log.debug("Initialized tic-tac-toe game screen.");
                 Arrays.asList(
                         button00, button01, button02, button10, button11, button12, button20, button21, button22
                    ).forEach(button -> {
@@ -46,7 +46,7 @@ public class GameScreenController {
 
     @FXML
     private void pressed(ActionEvent event) {
-        OneTimeEvent.simplified(() -> {
+        TrydentEngine.runLater(() -> {
                 Button target = (Button) event.getSource();
                 if((boolean) target.getUserData()){
                     if(player){
