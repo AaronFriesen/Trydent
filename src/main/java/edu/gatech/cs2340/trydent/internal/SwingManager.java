@@ -9,6 +9,8 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -17,6 +19,7 @@ import javafx.util.Duration;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
+import edu.gatech.cs2340.trydent.ContinuousEvent;
 import edu.gatech.cs2340.trydent.log.Log;
 
 public class SwingManager implements JavaFXManager {
@@ -74,6 +77,8 @@ public class SwingManager implements JavaFXManager {
         background = new Group();
         root.getChildren().addAll(new Pane(background));
 
+        addEventHooks();
+
         long sleepTimeMillis = 5;
         timeline = new Timeline(new KeyFrame(Duration.ZERO, new EventHandler<ActionEvent>() {
             @Override
@@ -87,6 +92,23 @@ public class SwingManager implements JavaFXManager {
         timeline.play();
 
         starting = false;
+    }
+
+    private void addEventHooks() {
+        root.addEventHandler(KeyEvent.KEY_PRESSED, event -> KeyboardImpl.pressed(event.getCode()));
+        root.addEventHandler(KeyEvent.KEY_RELEASED, event -> KeyboardImpl.released(event.getCode()));
+        root.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> MouseImpl.pressed(event));
+        root.addEventHandler(MouseEvent.MOUSE_RELEASED, event -> MouseImpl.released(event));
+        root.addEventHandler(MouseEvent.MOUSE_MOVED, event -> MouseImpl.moved(event));
+        root.addEventHandler(MouseEvent.MOUSE_DRAGGED, event -> MouseImpl.dragged(event));
+
+        new ContinuousEvent(){
+            @Override
+            public void onUpdate() {
+                MouseImpl.newFrame();
+                KeyboardImpl.newFrame();
+            }
+        };
     }
 
     @Override

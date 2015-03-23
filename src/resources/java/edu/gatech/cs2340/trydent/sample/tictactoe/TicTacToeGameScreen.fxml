@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.GridPane?>
+
+<GridPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.gatech.cs2340.trydent.sample.tictactoe.GameScreenController">
+   <rowConstraints>
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+   </rowConstraints>
+   <columnConstraints>
+      <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+   </columnConstraints>
+   <children>
+      <Button fx:id="button00" mnemonicParsing="false" onAction="#pressed" text="Button" />
+      <Button fx:id="button01" mnemonicParsing="false" onAction="#pressed" text="Button" GridPane.columnIndex="1" />
+      <Button fx:id="button02" mnemonicParsing="false" onAction="#pressed" text="Button" GridPane.columnIndex="2" />
+      <Button fx:id="button10" mnemonicParsing="false" onAction="#pressed" text="Button" GridPane.rowIndex="1" />
+      <Button fx:id="button11" mnemonicParsing="false" onAction="#pressed" text="Button" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Button fx:id="button12" mnemonicParsing="false" onAction="#pressed" text="Button" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+      <Button fx:id="button20" mnemonicParsing="false" onAction="#pressed" text="Button" GridPane.rowIndex="2" />
+      <Button fx:id="button21" mnemonicParsing="false" onAction="#pressed" text="Button" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Button fx:id="button22" mnemonicParsing="false" onAction="#pressed" text="Button" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+   </children>
+</GridPane>
