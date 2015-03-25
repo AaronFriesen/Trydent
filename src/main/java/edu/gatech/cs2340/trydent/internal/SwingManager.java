@@ -30,6 +30,7 @@ public class SwingManager implements JavaFXManager {
 
     private String windowTitle = "TrydentEngine";
     private int width = 640, height = 480;
+    private Color backgroundColor = Color.TRANSPARENT;
     private Runnable updateAction;
 
     private Scene scene;
@@ -71,7 +72,7 @@ public class SwingManager implements JavaFXManager {
 
     private void createScene(JFXPanel panel) {
         root = new StackPane();
-        scene = new Scene(root, Color.TRANSPARENT);
+        scene = new Scene(root, backgroundColor);
         panel.setScene(scene);
 
         background = new Group();
@@ -175,6 +176,19 @@ public class SwingManager implements JavaFXManager {
     @Override
     public Group getBackground() {
         return background;
+    }
+
+    @Override
+    public void setBackgroundColor(Color color) {
+        backgroundColor = color;
+        if (scene != null) {
+            scene.setFill(color);
+        }
+    }
+
+    @Override
+    public Scene getScene() {
+        return scene;
     }
 
     @Override
