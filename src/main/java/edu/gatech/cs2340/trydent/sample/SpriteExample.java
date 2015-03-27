@@ -18,7 +18,7 @@ public class SpriteExample implements Runnable {
         TrydentEngine.setWindowTitle("TrydentEngine - Sprite Example");
         TrydentEngine.setWindowSize(720, 480);
         TrydentEngine.setBackgroundColor(Color.WHITE);
-        TrydentEngine.runLater(new SpriteExample());
+        TrydentEngine.runOnce(new SpriteExample());
     }
 
     @Override

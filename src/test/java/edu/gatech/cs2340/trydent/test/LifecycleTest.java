@@ -10,7 +10,12 @@ import org.junit.Test;
 import edu.gatech.cs2340.trydent.ContinuousEvent;
 import edu.gatech.cs2340.trydent.Time;
 import edu.gatech.cs2340.trydent.TrydentEngine;
+import edu.gatech.cs2340.trydent.internal.TrydentInternalException;
 
+/**
+ * Tests for continuous event timings and engine start/stop behavior.
+ *
+ */
 public class LifecycleTest {
 
     @Test
@@ -175,9 +180,7 @@ public class LifecycleTest {
         }
 
         String[] expected = {
-            "onStart", "t0=0[.]0", "delta t0=0[.]0",
-            "onStop",
-            "t1=(([1-9].*)|(0[.][0]*[1-9]+[0-9]*))"
+            "onStart", "t0=0[.]0", "delta t0=0[.]0", "onStop", "t1=(([1-9].*)|(0[.][0]*[1-9]+[0-9]*))"
         };
 
         assertTrue("expected # messages = " + expected.length + " got " + messages.size(),
@@ -187,6 +190,115 @@ public class LifecycleTest {
             assertTrue("Message #" + i + ": \"" + messages.get(i) + "\" should match \"" + expected[i] + "\"", messages
                     .get(i).matches(expected[i]));
         }
+    }
+
+    @Test
+    public void testRunOnce() {
+        final List<String> messages = new LinkedList<String>();
+
+        new ContinuousEvent() {
+            int frame = 0;
+            @Override
+            public void onStart() {
+                frame++;
+            }
+
+            @Override
+            public void onUpdate() {
+                frame++;
+
+                if (frame == 5) {
+                    TrydentEngine.runOnce(() -> {
+                        messages.add("runOnce");
+                    });
+                } else if (frame > 10) {
+                    TrydentEngine.quit();
+                }
+            }
+
+            @Override
+            public void onStop() {
+
+            }
+
+        };
+
+        TrydentEngine.start();
+
+        try {
+            TrydentEngine.waitUntilEngineStops();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        String text = messages.toString();
+        String expected = "[runOnce]";
+
+        assertTrue("Expected \"" + expected + "\", got \"" + text + "\"", text.equals(expected));
+    }
+
+    @Test
+    public void testRunContinuously() {
+        final List<String> messages = new LinkedList<String>();
+
+        new ContinuousEvent() {
+            int frame = 0;
+            Runnable runner;
+            Boolean[] keepRunning = { true };
+
+            @Override
+            public void onStart() {
+                runner = new Runnable() {
+                    int runCount = 0;
+                    @Override
+                    public void run() {
+                        runCount++;
+                        if (runCount >= 1 && runCount <= 3) {
+                            messages.add("run" + runCount);
+                        }
+                        keepRunning[0] = true;
+                    }
+                };
+            }
+
+            @Override
+            public void onUpdate() {
+                frame++;
+
+                if (frame == 5) {
+                    TrydentEngine.runContinuously(runner);
+                } else if (frame == 10) {
+                    keepRunning[0] = false;
+                    if (!TrydentEngine.stopRunnable(runner)) {
+                        throw new TrydentInternalException("Not able to stop the runner!");
+                    }
+                } else if (frame > 10) {
+                    if (!keepRunning[0]) {
+                        TrydentEngine.quit();
+                    }
+                    keepRunning[0] = false;
+                }
+            }
+
+            @Override
+            public void onStop() {
+
+            }
+
+        };
+
+        TrydentEngine.start();
+
+        try {
+            TrydentEngine.waitUntilEngineStops();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        String text = messages.toString();
+        String expected = "[run1, run2, run3]";
+
+        assertTrue("Expected \"" + expected + "\", got \"" + text + "\"", text.equals(expected));
     }
 
 }

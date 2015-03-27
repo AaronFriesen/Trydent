@@ -21,7 +21,7 @@ public class RectangleExample implements Runnable {
         TrydentEngine.start();
         TrydentEngine.setWindowTitle("TrydentEngine - Rectangle Example");
         TrydentEngine.setWindowSize(720, 480);
-        TrydentEngine.runLater(new RectangleExample());
+        TrydentEngine.runOnce(new RectangleExample());
     }
 
     @Override
