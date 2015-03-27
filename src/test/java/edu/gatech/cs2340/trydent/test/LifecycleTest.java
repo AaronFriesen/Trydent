@@ -209,8 +209,9 @@ public class LifecycleTest {
 
                 if (frame == 5) {
                     TrydentEngine.runOnce(() -> {
-                        messages.add("runOnce");
-                    });
+                            messages.add("runOnce");
+                        }
+                    );
                 } else if (frame > 10) {
                     TrydentEngine.quit();
                 }
@@ -244,10 +245,12 @@ public class LifecycleTest {
         new ContinuousEvent() {
             int frame = 0;
             Runnable runner;
-            Boolean[] keepRunning = { true };
+            boolean[] keepRunning = new boolean[1];
 
             @Override
             public void onStart() {
+                keepRunning[0] = true;
+
                 runner = new Runnable() {
                     int runCount = 0;
                     @Override
