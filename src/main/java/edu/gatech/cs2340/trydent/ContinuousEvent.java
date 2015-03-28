@@ -2,6 +2,14 @@ package edu.gatech.cs2340.trydent;
 
 /**
  * Represents an event that is called by the engine every frame.
+ * <p>
+ * ContinousEvents start being executed automatically by
+ * {@link edu.gatech.cs2340.trydent.TrydentEngine} the frame after they are
+ * created.
+ * <p>
+ * Users seeking to create ContinousEvents should subclass this class, and
+ * override at least the {@link #onUpdate} method, which is called once per
+ * frame.
  *
  * @author Garrett Malmquist
  *
@@ -10,6 +18,10 @@ public abstract class ContinuousEvent {
 
     private boolean started = false;
 
+    /**
+     * Creates a new ContinuousEvent, and tells the engine to start running it
+     * on the next frame.
+     */
     public ContinuousEvent() {
         TrydentEngine.addContinuousEvent(this);
     }

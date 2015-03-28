@@ -31,7 +31,7 @@ public class GameScreenController {
     private boolean player;
 
     public GameScreenController() {
-        TrydentEngine.runLater(() -> {
+        TrydentEngine.runOnce(() -> {
                 Log.debug("Initialized tic-tac-toe game screen.");
                 Arrays.asList(
                         button00, button01, button02, button10, button11, button12, button20, button21, button22
@@ -46,7 +46,7 @@ public class GameScreenController {
 
     @FXML
     private void pressed(ActionEvent event) {
-        TrydentEngine.runLater(() -> {
+        TrydentEngine.runOnce(() -> {
                 Button target = (Button) event.getSource();
                 if((boolean) target.getUserData()){
                     if(player){

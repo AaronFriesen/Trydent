@@ -1,7 +1,9 @@
 package edu.gatech.cs2340.trydent;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import javafx.fxml.FXMLLoader;
@@ -32,12 +34,15 @@ public class TrydentEngine {
 
     private Set<ContinuousEvent> continuousEvents, continuousEventsToAdd, continuousEventsToRemove;
 
+    private Map<Runnable, ContinuousEvent> continuousRunnables;
+
     private JavaFXManager fxManager;
 
     private TrydentEngine() {
         continuousEvents = new HashSet<>();
         continuousEventsToAdd = new HashSet<>();
         continuousEventsToRemove = new HashSet<>();
+        continuousRunnables = new HashMap<>();
 
         fxManager = new SwingManager();
     }
@@ -208,12 +213,59 @@ public class TrydentEngine {
     }
 
     /**
-     * Tells the TrydentEngine to run the given runnable on the next frame.
+     * Stops the runnable that was previously executed with
+     * {@link #runContinuously(Runnable)}.
+     * <p>
+     * Depending on when this method is called, the runnable might be run one
+     * more time before stopping permanently. For more controlled behavior, use
+     * the {@link edu.gatech.cs2340.trydent.ContinuousEvent} class instead of
+     * {@link #runContinuously(Runnable)}.
+     *
+     * @param runnable
+     *            the runnable to stop executing every frame
+     * @return true if the runnable was stopped, false if it was already stopped
+     *         or not run in the first place.
+     */
+    public static boolean stopRunnable(Runnable runnable) {
+        if (getInstance().continuousRunnables.containsKey(runnable)) {
+            getInstance().continuousRunnables.get(runnable).stop();
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Tells the TrydentEngine to run the given runnable continuously (once per
+     * frame), starting on the next frame.
+     * <p>
+     * For more sophisticated behavior, such as triggering actions when the
+     * runnable starts or finishes, see
+     * {@link edu.gatech.cs2340.trydent.ContinuousEvent}.
+     * <p>
+     * To stop the runnable, use {@link #stopRunnable(Runnable)}.
      *
      * @param runnable
      *            action to run
      */
-    public static void runLater(final Runnable runnable) {
+    public static void runContinuously(final Runnable runnable) {
+        getInstance().continuousRunnables.put(runnable, new ContinuousEvent() {
+            @Override
+            public void onUpdate() {
+                runnable.run();
+            }
+        });
+    }
+
+    /**
+     * Tells the TrydentEngine to run the given runnable on the next frame.
+     * <p>
+     * To run something every frame, use {@link #runContinuously(Runnable)} or
+     * {@link edu.gatech.cs2340.trydent.ContinuousEvent} instead.
+     *
+     * @param runnable
+     *            action to run
+     */
+    public static void runOnce(final Runnable runnable) {
         new ContinuousEvent() {
             @Override
             public void onStart() {

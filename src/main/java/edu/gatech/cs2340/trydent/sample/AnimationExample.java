@@ -26,7 +26,7 @@ public class AnimationExample implements Runnable {
         TrydentEngine.start();
         TrydentEngine.setWindowTitle("TrydentEngine - Animation Example");
         TrydentEngine.setWindowSize(width, height);
-        TrydentEngine.runLater(new AnimationExample());
+        TrydentEngine.runOnce(new AnimationExample());
     }
 
     private void createAnimation(Position pos, Color color, IndexWrapMode indexWrap, TimeWrapMode timeWrap,

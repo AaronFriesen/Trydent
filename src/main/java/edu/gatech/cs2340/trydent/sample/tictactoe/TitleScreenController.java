@@ -93,7 +93,7 @@ public class TitleScreenController {
 
     @FXML
     private void toGameScreen(ActionEvent event) {
-        TrydentEngine.runLater(() -> {
+        TrydentEngine.runOnce(() -> {
                 if(started2 || started3) return;
                 Log.debug("Switching to game screen.");
                 TrydentEngine.setForeground(getClass().getResource("TicTacToeGameScreen.fxml"));
@@ -130,7 +130,7 @@ public class TitleScreenController {
 
     @FXML
     private void toGameScreen2(ActionEvent event) {
-        TrydentEngine.runLater(() -> {
+        TrydentEngine.runOnce(() -> {
                 if(started2 || started3) return;
                 Log.debug("Started game type 2.");
                 initEventScreen();
@@ -141,7 +141,7 @@ public class TitleScreenController {
 
     @FXML
     private void toGameScreen3(ActionEvent event) {
-        TrydentEngine.runLater(() -> {
+        TrydentEngine.runOnce(() -> {
                 if(started2 || started3) return;
                 Log.debug("Started game type 3.");
                 initEventScreen();

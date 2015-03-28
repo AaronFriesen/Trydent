@@ -8,7 +8,7 @@ public class TicTacToe implements Runnable {
         TrydentEngine.start();
         TrydentEngine.setWindowTitle("TrydentEngine - Tic-Tac-Toe");
         TrydentEngine.setWindowSize(720, 480);
-        TrydentEngine.runLater(new TicTacToe());
+        TrydentEngine.runOnce(new TicTacToe());
     }
 
     @Override
