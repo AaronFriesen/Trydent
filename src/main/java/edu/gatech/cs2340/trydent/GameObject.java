@@ -9,12 +9,16 @@ import javafx.scene.transform.NonInvertibleTransformException;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Transform;
 import edu.gatech.cs2340.trydent.animation.Animation;
+import edu.gatech.cs2340.trydent.animation.AnimationEvent;
+import edu.gatech.cs2340.trydent.animation.AnimationListener;
+import edu.gatech.cs2340.trydent.animation.DispatchAnimationListener;
 import edu.gatech.cs2340.trydent.internal.TrydentInternalException;
 import edu.gatech.cs2340.trydent.math.BaseVector;
 import edu.gatech.cs2340.trydent.math.MathTools;
 import edu.gatech.cs2340.trydent.math.Orientation;
 import edu.gatech.cs2340.trydent.math.Position;
 import edu.gatech.cs2340.trydent.math.Scale;
+import edu.gatech.cs2340.trydent.math.curve.IndexWrapMode;
 import edu.gatech.cs2340.trydent.math.curve.TimeWrapMode;
 
 /**
@@ -39,11 +43,21 @@ public class GameObject {
     private double animationStartTime;
     private int animationLoopCounter = 0;
 
+    private DispatchAnimationListener animationListener;
+    private volatile boolean animationPaused = false;
+
+    /**
+     * Creates a new GameObject with the given name.
+     * @param name the name of the GameObject.
+     */
     public GameObject(String name) {
         this();
         this.name = name;
     }
 
+    /**
+     * Creates a new unnamed GameObject.
+     */
     public GameObject() {
         if (!TrydentEngine.isRunning())
             throw new TrydentException("Cannot instantiate GameObject before TrydentEngine has been started.");
@@ -66,16 +80,54 @@ public class GameObject {
         setMatrices(localTranslate, localRotate, localScale);
 
         createAnimationBehavior();
+
+        animationListener = new DispatchAnimationListener();
     }
 
+    /**
+     * Creates a new GameObject displaying the given JavaFX node.
+     * @param javaFXObject the JavaFX node to display
+     */
     public GameObject(Node javaFXObject) {
         this();
         this.fxNode.getChildren().add(javaFXObject);
     }
 
+    /**
+     * Creates a new GameObject with the given name and JavaFX node.
+     * @param name the name of the GameObject
+     * @param javaFXObject the JavaFX node to display
+     */
     public GameObject(String name, Node javaFXObject) {
         this(javaFXObject);
         this.name = name;
+    }
+
+    /**
+     * Adds the animation listener.
+     *
+     * @param listener
+     *            AnimationListener object to receive AnimationEvents.
+     */
+    public void addAnimationListener(AnimationListener listener) {
+        animationListener.addAnimationListener(listener);
+    }
+
+    /**
+     * Removes the animation listener.
+     *
+     * @param listener
+     *            AnimationListener to remove.
+     */
+    public void removeAnimationListener(AnimationListener listener) {
+        animationListener.removeAnimationListener(listener);
+    }
+
+    /**
+     * Removes all animation listeners.
+     */
+    public void clearAnimationListeners() {
+        animationListener.clearAnimationListeners();
     }
 
     /**
@@ -87,10 +139,15 @@ public class GameObject {
      *            the animation to play
      */
     public void playAnimation(Animation animation) {
+        if (this.animation != null) {
+            animationListener.animationInterrupted(new AnimationEvent(this, this.animation));
+        }
         this.animation = animation;
         this.animationStartTime = Time.getTime();
         this.animationLoopCounter = 1;
         animation.setTimeWrap(TimeWrapMode.CLAMP);
+        animationPaused = false;
+        animationListener.animationStarted(new AnimationEvent(this, animation));
     }
 
     /**
@@ -108,10 +165,16 @@ public class GameObject {
      *            infinitely.
      */
     public void loopAnimation(Animation animation, int count) {
+        if (this.animation != null) {
+            animationListener.animationInterrupted(new AnimationEvent(this, this.animation));
+        }
         this.animation = animation;
         this.animationStartTime = Time.getTime();
         this.animationLoopCounter = count;
         animation.setTimeWrap(TimeWrapMode.WRAP);
+        animation.setIndexWrap(IndexWrapMode.WRAP);
+        animationPaused = false;
+        animationListener.animationStarted(new AnimationEvent(this, animation));
     }
 
     /**
@@ -128,9 +191,32 @@ public class GameObject {
     }
 
     /**
+     * Pauses or unpauses the currently playing animation (if any).
+     *
+     * @param paused
+     *            whether to pause or play the animation.
+     */
+    public void setAnimationPaused(boolean paused) {
+        if (this.animationPaused == paused)
+            return;
+
+        this.animationPaused = paused;
+        if (this.animation != null) {
+            if (paused) {
+                animationListener.animationPaused(new AnimationEvent(this, animation));
+            } else {
+                animationListener.animationUnpaused(new AnimationEvent(this, animation));
+            }
+        }
+    }
+
+    /**
      * Stops the currently playing animation.
      */
     public void stopAnimation() {
+        if (this.animation != null) {
+            animationListener.animationStopped(new AnimationEvent(this, animation));
+        }
         this.animation = null;
     }
 
@@ -142,11 +228,24 @@ public class GameObject {
                 if (g.animation == null) {
                     return;
                 }
+
+                if (g.animationPaused) {
+                    // Simulate pausing by moving the start-time forward.
+                    g.animationStartTime += Time.getTimePassed();
+                    return; // No updates should occur, so don't bother.
+                }
+
                 double time = Time.getTime() - g.animationStartTime;
                 if (g.animationLoopCounter >= 0 && time > g.animationLoopCounter * g.animation.getDuration()) {
+                    animationListener.animationEnded(new AnimationEvent(g, animation));
                     g.animation = null;
-                    // TODO: add callbacks saying that the animation ended.
                     return;
+                } else {
+                    int lastLoopIndex = (int) (Math.max(0, time - Time.getTimePassed()) / g.animation.getDuration());
+                    int currLoopIndex = (int) (Math.max(0, time) / g.animation.getDuration());
+                    if (currLoopIndex > lastLoopIndex) {
+                        animationListener.animationLooped(new AnimationEvent(g, animation));
+                    }
                 }
                 g.setLocalOrientation(g.animation.sample(time));
             }
@@ -418,8 +517,10 @@ public class GameObject {
     }
 
     /**
-     * Returns this object's underlying JavaFX Group object. This allows child classes to modify some properties
-     * directly, such as the children list. This should be used with caution, to avoid breaking Trydent's scene graph.
+     * Returns this object's underlying JavaFX Group object. This allows child
+     * classes to modify some properties directly, such as the children list.
+     * This should be used with caution, to avoid breaking Trydent's scene
+     * graph.
      *
      * @return
      */
