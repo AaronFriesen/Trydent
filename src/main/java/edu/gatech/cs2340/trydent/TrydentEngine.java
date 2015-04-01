@@ -1,6 +1,6 @@
 package edu.gatech.cs2340.trydent;
 
-import java.net.URL;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -143,11 +143,11 @@ public class TrydentEngine {
      *            the url of the new JavaFX node
      * @return the previous foreground JavaFX node, if none, returns null
      */
-    public static Node setForeground(URL resource) {
+    public static Node setForeground(InputStream resource) {
         Node previous = null;
         try {
-            FXMLLoader myLoader = new FXMLLoader(resource);
-            Node node = myLoader.load();
+            FXMLLoader myLoader = new FXMLLoader();
+            Node node = myLoader.load(resource);
             previous = getInstance().fxManager.setForeground(node);
         } catch (Exception e) {
             System.out.println(e.getMessage());

@@ -23,6 +23,8 @@ import edu.gatech.cs2340.trydent.math.Position;
 
 
 public class TitleScreenController {
+    private static final String GAME_SCREEN = "edu/gatech/cs2340/trydent/sample/tictactoe/TicTacToeGameScreen.fxml";
+
     @FXML
     private Button start1;
     @FXML
@@ -96,7 +98,7 @@ public class TitleScreenController {
         TrydentEngine.runOnce(() -> {
                 if(started2 || started3) return;
                 Log.debug("Switching to game screen.");
-                TrydentEngine.setForeground(getClass().getResource("TicTacToeGameScreen.fxml"));
+                TrydentEngine.setForeground(getClass().getClassLoader().getResourceAsStream(GAME_SCREEN));
             }
         );
     }

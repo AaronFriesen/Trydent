@@ -16,6 +16,7 @@ import edu.gatech.cs2340.trydent.math.Scale;
  *
  */
 public class RectangleExample implements Runnable {
+    private static final String TITLE_SCREEN = "edu/gatech/cs2340/trydent/sample/TitleScreen.fxml";
 
     public static void main(String[] args) {
         TrydentEngine.start();
@@ -26,7 +27,7 @@ public class RectangleExample implements Runnable {
 
     @Override
     public void run() {
-        TrydentEngine.setForeground(getClass().getResource("TitleScreen.fxml"));
+        TrydentEngine.setForeground(getClass().getClassLoader().getResourceAsStream(TITLE_SCREEN));
 
         GameObject obj = new GameObject(new Rectangle(100, 20, Color.GREEN));
         obj.setLocalPosition(new Position(100, 100));
