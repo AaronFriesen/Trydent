@@ -23,7 +23,7 @@ public class SpriteExample implements Runnable {
 
     @Override
     public void run() {
-        String prefix = "edu/gatech/cs2340/trydent/sample/res/";
+        String prefix = "edu/gatech/cs2340/trydent/sample/sprites/";
         GameObject pikachu = new Sprite(prefix + "pikapika.gif");
         pikachu.setLocalPosition(new Position(50, 50));
 
