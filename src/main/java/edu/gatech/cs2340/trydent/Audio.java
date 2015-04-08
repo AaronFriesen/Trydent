@@ -18,11 +18,11 @@ public class Audio {
     private static double musicMolume = MAX_VOLUME;
     private static Set<MediaContainer> soundEffects = new HashSet<>();
     private static MediaPlayer music;
-    private static boolean playing;
+    private static boolean playing = true;
 
     /**
      * Sets the background music for the game.
-     * By default, does not play immediately.
+     * By default, plays immediately.
      * @param musicFilename the path to the music file
      */
     public static void setMusic(String musicFilename) {
@@ -167,7 +167,7 @@ public class Audio {
          */
         public void play(){
             soundEffects.add(new MediaContainer(soundEffect, volume));
-            soundEffect.play();
+            if(playing) soundEffect.play();
             soundEffect.setOnEndOfMedia(() -> {
                     TrydentEngine.runOnce(() -> {
                             soundEffects.remove(soundEffect);
