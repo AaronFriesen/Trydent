@@ -1,5 +1,7 @@
 package edu.gatech.cs2340.trydent.internal;
 
+import java.awt.event.KeyAdapter;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -9,7 +11,6 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -78,7 +79,7 @@ public class SwingManager implements JavaFXManager {
         background = new Group();
         root.getChildren().addAll(new Pane(background));
 
-        addEventHooks();
+        addEventHooks(panel);
 
         long sleepTimeMillis = 5;
         timeline = new Timeline(new KeyFrame(Duration.ZERO, new EventHandler<ActionEvent>() {
@@ -95,9 +96,19 @@ public class SwingManager implements JavaFXManager {
         starting = false;
     }
 
-    private void addEventHooks() {
-        root.addEventHandler(KeyEvent.KEY_PRESSED, event -> KeyboardImpl.pressed(event.getCode()));
-        root.addEventHandler(KeyEvent.KEY_RELEASED, event -> KeyboardImpl.released(event.getCode()));
+    private void addEventHooks(JFXPanel panel) {
+        panel.addKeyListener(new KeyAdapter(){
+            @Override
+            public void keyPressed(java.awt.event.KeyEvent e) {
+                KeyboardImpl.pressed(KeyboardImpl.convertSwingToJavaFXKeyEvent(e.getKeyCode()));
+            }
+
+            @Override
+            public void keyReleased(java.awt.event.KeyEvent e) {
+                KeyboardImpl.released(KeyboardImpl.convertSwingToJavaFXKeyEvent(e.getKeyCode()));
+            }
+        });
+
         root.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> MouseImpl.pressed(event));
         root.addEventHandler(MouseEvent.MOUSE_RELEASED, event -> MouseImpl.released(event));
         root.addEventHandler(MouseEvent.MOUSE_MOVED, event -> MouseImpl.moved(event));
