@@ -27,6 +27,8 @@ public abstract class ContinuousEvent {
     }
 
     /**
+     * <strong>Do not call this method! It is for internal use only.</strong>
+     * <p>
      * Called by the engine on update.
      */
     final void doUpdate() {
@@ -38,6 +40,8 @@ public abstract class ContinuousEvent {
     }
 
     /**
+     * <strong>Do not call this method! It is for internal use only.</strong>
+     * <p>
      * Called by the engine on stop.
      */
     final void doStop() {
@@ -71,4 +75,11 @@ public abstract class ContinuousEvent {
     public void onStop() {
     }
 
+    /**
+     * Called right before onUpdate(). Subclasses overriding this method MUST
+     * invoke the super-method, or an exception will be thrown.
+     */
+    public void onPreUpdate() {
+        TrydentEngine.setSuperCalledFlag();
+    }
 }

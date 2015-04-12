@@ -1,10 +1,17 @@
 package edu.gatech.cs2340.trydent;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Shape;
 import javafx.scene.transform.NonInvertibleTransformException;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Transform;
@@ -25,6 +32,44 @@ import edu.gatech.cs2340.trydent.math.curve.TimeWrapMode;
  * Basic GameObject all visual elements of a game should either use directly or
  * extend.
  *
+ * <p>
+ * Core functionality of GameObjects includes arbitrary positioning, scaling,
+ * and rotating in the scene graph, display of JavaFXNodes, and animation.
+ *
+ * <p>
+ * <strong>GameObject generic `Features'</strong>
+ * <p>
+ * Features are similar to `Components' in similar game engines; essentially,
+ * they are objects that can be looked up by the classes they are instances of.
+ * This can be used to extend GameObjects with generic functionality.
+ * <p>
+ * For example, say you want to add to GameObject the ability to serialize
+ * themselves -- that is, the ability to store a String representation of
+ * themselves, for use in a save-game feature. You might do the following:
+ * <p>
+ *
+ * <pre>
+ * public interface Serializer {
+ *   public String serialize();
+ * }
+ * ... (in some other file) ...
+ * GameObject bulletGameObject = ...
+ * Serializer s = new BulletSerializer();
+ * bulletGameObject.addFeature(s);
+ * </pre>
+ * <p>
+ * Then later on, you might use the serializer as such:
+ *
+ * <pre>
+ * public void saveGameObjects(Collection&lt;GameObject&gt; objects, PrintStream file) {
+ *     for (GameObject g : objects) {
+ *         if (g.hasFeature(Serializer.class)) {
+ *             file.println(g.getFeature(Serializer.class).serialize());
+ *         }
+ *     }
+ * }
+ * </pre>
+ *
  * @author Garrett Malmquist
  *
  */
@@ -34,6 +79,9 @@ public class GameObject {
 
     private Group fxNode;
     private GameObject parent;
+
+    // Only used for deletion.
+    private List<GameObject> children;
 
     private Transform localRotate;
     private Transform localScale;
@@ -46,9 +94,15 @@ public class GameObject {
     private DispatchAnimationListener animationListener;
     private volatile boolean animationPaused = false;
 
+    private boolean isDestroyed = false;
+
+    private Map<Class<?>, Set<Object>> features;
+
     /**
      * Creates a new GameObject with the given name.
-     * @param name the name of the GameObject.
+     *
+     * @param name
+     *            the name of the GameObject.
      */
     public GameObject(String name) {
         this();
@@ -61,6 +115,9 @@ public class GameObject {
     public GameObject() {
         if (!TrydentEngine.isRunning())
             throw new TrydentException("Cannot instantiate GameObject before TrydentEngine has been started.");
+
+        this.children = new LinkedList<>();
+        this.features = new HashMap<>();
 
         // We initialize all GameObjects to be groups, so that they can easily
         // have children. GameObjects which are more than just empty will simply
@@ -86,7 +143,9 @@ public class GameObject {
 
     /**
      * Creates a new GameObject displaying the given JavaFX node.
-     * @param javaFXObject the JavaFX node to display
+     *
+     * @param javaFXObject
+     *            the JavaFX node to display
      */
     public GameObject(Node javaFXObject) {
         this();
@@ -95,12 +154,186 @@ public class GameObject {
 
     /**
      * Creates a new GameObject with the given name and JavaFX node.
-     * @param name the name of the GameObject
-     * @param javaFXObject the JavaFX node to display
+     *
+     * @param name
+     *            the name of the GameObject
+     * @param javaFXObject
+     *            the JavaFX node to display
      */
     public GameObject(String name, Node javaFXObject) {
         this(javaFXObject);
         this.name = name;
+    }
+
+    /**
+     * Creates a new GameObject displaying the JavaFX node generated from the
+     * parameter.
+     *
+     * @param node
+     *            the object which can generate javafx nodes.
+     */
+    public GameObject(JavaFxConvertable node) {
+        this(node.toJavaFxNode());
+    }
+
+    /**
+     * Creates a new GameObject displaying the JavaFX node generated from the
+     * parameter.
+     *
+     * @param name
+     *            the name of this GameObject.
+     * @param node
+     *            the object which can generate javafx nodes.
+     */
+    public GameObject(String name, JavaFxConvertable node) {
+        this(name, node.toJavaFxNode());
+    }
+
+    /**
+     * Associates a new `feature' with this GameObject.
+     * <p>
+     * {@see edu.gatech.cs2340.trydent.GameObject} for a discussion of what
+     * features are and how to use them.
+     *
+     * @param feature
+     *            the Object to add as a feature.
+     */
+    public <T> void addFeature(T feature) {
+        Class<?> key = feature.getClass();
+        if (!features.containsKey(key)) {
+            features.put(key, new HashSet<Object>());
+        }
+        features.get(key).add(feature);
+    }
+
+    /**
+     * Retrieves a `feature' of the given type associated with this GameObject.
+     * <p>
+     * {@see edu.gatech.cs2340.trydent.GameObject} for a discussion of what
+     * features are and how to use them.
+     *
+     * @param type
+     *            the type (or supertype) of the feature to retrieve.
+     * @return the feature if it exists, null otherwise.
+     */
+    @SuppressWarnings("unchecked")
+    public <T> T getFeature(Class<T> type) {
+        if (features.containsKey(type)) {
+            for (Object o : features.get(type)) {
+                return (T) o;
+            }
+        }
+
+        for (Class<?> key : features.keySet()) {
+            if (type.isAssignableFrom(key)) {
+                for (Object o : features.get(key)) {
+                    return (T) o;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Retrieves all `features' of the given type associated with this
+     * GameObject.
+     * <p>
+     * {@see edu.gatech.cs2340.trydent.GameObject} for a discussion of what
+     * features are and how to use them.
+     *
+     * @param type
+     *            the type (or supertype) of the features to retrieve. E.g.,
+     *            passing in `Object.class' will retrieve <i>all</i> features on
+     *            this game objects, because all features are subclasses of the
+     *            java Object superclass.
+     * @return an Iterable over all features of the given type that this object
+     *         contains.
+     */
+    @SuppressWarnings("unchecked")
+    public <T> Iterable<T> getFeatures(Class<T> type) {
+        Set<T> iterable = new HashSet<>();
+        for (Class<?> key : features.keySet()) {
+            if (type.isAssignableFrom(key)) {
+                for (Object o : features.get(key)) {
+                    iterable.add((T) o);
+                }
+            }
+        }
+        return iterable;
+    }
+
+    /**
+     * Checks whether this object contains a `feature' of the given type
+     * associated with this GameObject.
+     * <p>
+     * {@see edu.gatech.cs2340.trydent.GameObject} for a discussion of what
+     * features are and how to use them.
+     *
+     * @param type
+     *            the type (or supertype) of the feature to check for.
+     * @return true if this object has a feature of the given type, false
+     *         otherwise.
+     */
+    public <T> boolean hasFeature(Class<T> type) {
+        return getFeature(type) != null;
+    }
+
+    /**
+     * Removes all `features' of (or subclasses of) the given type associated
+     * with this GameObject.
+     * <p>
+     * {@see edu.gatech.cs2340.trydent.GameObject} for a discussion of what
+     * features are and how to use them.
+     *
+     * @param type
+     *            the type (or supertype) of the features to remove.
+     */
+    public <T> void removeAllFeatures(Class<T> type) {
+        Set<Class<?>> toRemove = new HashSet<>();
+        for (Class<?> key : features.keySet()) {
+            if (type.isAssignableFrom(key)) {
+                toRemove.add(key);
+            }
+        }
+        for (Class<?> key : toRemove) {
+            features.remove(key);
+        }
+    }
+
+    /**
+     * Removes the `feature' of (or a subclass of) the given type associated
+     * with this GameObject.
+     * <p>
+     * {@see edu.gatech.cs2340.trydent.GameObject} for a discussion of what
+     * features are and how to use them.
+     *
+     * @param type
+     *            the type (or supertype) of the feature to remove.
+     */
+    public <T> boolean removeFeature(T feature) {
+        for (Class<?> key : features.keySet()) {
+            if (feature.getClass().isAssignableFrom(key)) {
+                if (features.get(key).remove(feature)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Sets the fill of the underlying javafx node, if applicable.
+     *
+     * @param paint
+     */
+    public void setFill(Paint paint) {
+        if (fxNode != null && fxNode.getChildren().size() > 0) {
+            Node child = fxNode.getChildren().get(0);
+            if (child != null && child instanceof Shape) {
+                ((Shape) child).setFill(paint);
+            }
+        }
     }
 
     /**
@@ -225,6 +458,7 @@ public class GameObject {
             @Override
             public void onUpdate() {
                 GameObject g = getGameObject();
+
                 if (g.animation == null) {
                     return;
                 }
@@ -541,11 +775,18 @@ public class GameObject {
         if (object != null && (object == this || object.isChildOf(this)))
             throw new TrydentException(
                     "Time-travel paradox detected: GameObjects cannot have their descendents as their parents.");
+
+        if (fxNode == null)
+            return;
         Position oldPos = getPosition();
         double oldRot = getRotation();
         Scale oldScale = getScale();
 
         getParentFxNode().getChildren().remove(fxNode);
+
+        if (this.parent != null) {
+            this.parent.children.remove(this);
+        }
 
         this.parent = object;
         getParentFxNode().getChildren().add(fxNode);
@@ -553,6 +794,32 @@ public class GameObject {
         setScale(oldScale);
         setPosition(oldPos);
         setRotation(oldRot);
+
+        if (this.parent != null) {
+            this.parent.children.add(this);
+        }
+    }
+
+    /**
+     * Marks this object and its children for deletion.
+     */
+    public void destroy() {
+        for (GameObject child : this.children) {
+            child.destroy();
+        }
+        setParent(null);
+        getParentFxNode().getChildren().remove(fxNode);
+        isDestroyed = true;
+        this.fxNode = null;
+    }
+
+    /**
+     * Returns whether this object has been destroyed.
+     *
+     * @return
+     */
+    public boolean isDestroyed() {
+        return isDestroyed;
     }
 
     public GameObject getParent() {
