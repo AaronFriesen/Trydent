@@ -41,7 +41,7 @@ public class TitleScreenController {
 
     public TitleScreenController() {
         Log.debug("Initialized tic-tac-toe title screen.");
-        new ContinuousEvent(){
+        new ContinuousEvent() {
             @Override
             public void onUpdate() {
                 if(started2) {
@@ -55,7 +55,7 @@ public class TitleScreenController {
 
     private void handleKeyboard() {
         Rectangle target = null;
-        for(KeyCode key : keyToName.keySet()){
+        for(KeyCode key : keyToName.keySet()) {
             if(Keyboard.isKeyDownOnce(key)) {
                 target = tiles.get(keyToName.get(key));
                 break;
@@ -74,9 +74,9 @@ public class TitleScreenController {
     }
 
     private void handleMouse() {
-        if(Mouse.isMouseDownOnce(MouseButton.PRIMARY)){
-            for(int i = 0; i < 3; i++){
-                for(int j = 0; j < 3; j++){
+        if(Mouse.isMouseDownOnce(MouseButton.PRIMARY)) {
+            for(int i = 0; i < 3; i++) {
+                for(int j = 0; j < 3; j++) {
                     Rectangle target = tiles.get(i + "_" + j);
                     if(target.contains(target.sceneToLocal(MouseImpl.getMouseX(), MouseImpl.getMouseY()))
                             && !used.contains(target)) {
@@ -106,8 +106,8 @@ public class TitleScreenController {
     private void initEventScreen() {
         tiles = new HashMap<>();
         used = new HashSet<>();
-        for(int i = 0; i < 3; i++){
-            for(int j = 0; j < 3; j++){
+        for(int i = 0; i < 3; i++) {
+            for(int j = 0; j < 3; j++) {
                 String name = i + "_" + j;
                 Rectangle rect = new Rectangle(50, 50, Color.BLACK);
                 tiles.put(name, rect);

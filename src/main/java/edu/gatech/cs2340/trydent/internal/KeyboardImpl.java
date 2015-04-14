@@ -279,8 +279,8 @@ public class KeyboardImpl {
         return released.contains(key);
     }
 
-    static void newFrame(){
-        synchronized(UPDATE_LOCK){
+    static void newFrame() {
+        synchronized(UPDATE_LOCK) {
             down.clear();
             down.addAll(downBuffer);
             pressed.clear();
@@ -296,7 +296,7 @@ public class KeyboardImpl {
     }
 
     static void pressed(KeyCode key) {
-        synchronized(UPDATE_LOCK){
+        synchronized(UPDATE_LOCK) {
             if(!lastDownBuffer.contains(key)) {
                 pressedBuffer.add(key);
             }
@@ -305,7 +305,7 @@ public class KeyboardImpl {
     }
 
     static void released(KeyCode key) {
-        synchronized(UPDATE_LOCK){
+        synchronized(UPDATE_LOCK) {
             downBuffer.remove(key);
             releasedBuffer.add(key);
         }

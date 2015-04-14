@@ -97,7 +97,7 @@ public class SwingManager implements JavaFXManager {
     }
 
     private void addEventHooks(JFXPanel panel) {
-        panel.addKeyListener(new KeyAdapter(){
+        panel.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(java.awt.event.KeyEvent e) {
                 KeyboardImpl.pressed(KeyboardImpl.convertSwingToJavaFXKeyEvent(e.getKeyCode()));
@@ -114,7 +114,7 @@ public class SwingManager implements JavaFXManager {
         root.addEventHandler(MouseEvent.MOUSE_MOVED, event -> MouseImpl.moved(event));
         root.addEventHandler(MouseEvent.MOUSE_DRAGGED, event -> MouseImpl.dragged(event));
 
-        new ContinuousEvent(){
+        new ContinuousEvent() {
             @Override
             public void onUpdate() {
                 MouseImpl.newFrame();

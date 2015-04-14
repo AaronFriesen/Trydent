@@ -71,8 +71,8 @@ public class MouseImpl {
         return released.contains(button);
     }
 
-    static void newFrame(){
-        synchronized(UPDATE_LOCK){
+    static void newFrame() {
+        synchronized(UPDATE_LOCK) {
             down.clear();
             down.addAll(downBuffer);
             pressed.clear();

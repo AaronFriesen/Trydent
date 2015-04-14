@@ -56,7 +56,7 @@ public class Audio {
      * Volume is calculated by MasterVolumn * IndividualVolumn
      * @param newMasterVolume the new master volume (should be between 0.0 and 1.0)
      */
-    public static void setMasterVolume(double newMasterVolume){
+    public static void setMasterVolume(double newMasterVolume) {
         masterVolume = newMasterVolume;
         if(music != null) {
             music.setVolume(masterVolume * musicMolume);
@@ -72,7 +72,7 @@ public class Audio {
      * so the resulting volumne is MasterVolume * new_music
      * @param newMusicVolume the new music volume
      */
-    public static void setMusicVolume(double newMusicVolume){
+    public static void setMusicVolume(double newMusicVolume) {
         musicMolume = newMusicVolume;
         if(music != null) {
             music.setVolume(masterVolume * musicMolume);
@@ -101,7 +101,7 @@ public class Audio {
         if(music != null) {
             music.play();
         }
-        for(MediaContainer soundEffect : soundEffects){
+        for(MediaContainer soundEffect : soundEffects) {
             soundEffect.player.play();
         }
     }
@@ -110,7 +110,7 @@ public class Audio {
      * Determines if the audio is currently playing.
      * @return true if currently playing
      */
-    public static boolean isPlaying(){
+    public static boolean isPlaying() {
         return playing;
     }
 
@@ -135,7 +135,7 @@ public class Audio {
          * @param balance a value between -1.0 (left) to 1.0 (right)
          * @return current sound effect being built
          */
-        public SoundEffectBuilder setBalance(double balance){
+        public SoundEffectBuilder setBalance(double balance) {
             soundEffect.setBalance(balance);
             return this;
         }
@@ -146,7 +146,7 @@ public class Audio {
          * @param volume the volume value between 0.0 and 1.0
          * @return current sound effect being built
          */
-        public SoundEffectBuilder setVolume(double volume){
+        public SoundEffectBuilder setVolume(double volume) {
             this.volume = volume;
             soundEffect.setVolume(masterVolume * volume);
             return this;
@@ -157,7 +157,7 @@ public class Audio {
          * @param callback some action to occur when the sound effect finishes playing
          * @return current sound effect being built
          */
-        public SoundEffectBuilder setCallback(Runnable callback){
+        public SoundEffectBuilder setCallback(Runnable callback) {
             this.callback = callback;
             return this;
         }
@@ -165,7 +165,7 @@ public class Audio {
         /**
          * Plays the built sound effect.
          */
-        public void play(){
+        public void play() {
             soundEffects.add(new MediaContainer(soundEffect, volume));
             if(playing) soundEffect.play();
             soundEffect.setOnEndOfMedia(() -> {
@@ -182,7 +182,7 @@ public class Audio {
         MediaPlayer player;
         double playerVolume;
 
-        MediaContainer(MediaPlayer player, double playerVolume){
+        MediaContainer(MediaPlayer player, double playerVolume) {
             this.player = player;
             this.playerVolume = playerVolume;
         }

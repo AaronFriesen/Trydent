@@ -5,6 +5,11 @@ import edu.gatech.cs2340.trydent.Audio;
 import edu.gatech.cs2340.trydent.Mouse;
 import edu.gatech.cs2340.trydent.TrydentEngine;
 
+/**
+ * A basic audio example.
+ * Use mouse middle to pause or play sound.
+ * Click mouse primary or secondary for a sound effect.
+ */
 public class AudioExample implements Runnable {
     private static final String SONG = "edu/gatech/cs2340/trydent/sample/song.mp3";
     private static final String SFX = "edu/gatech/cs2340/trydent/sample/sfx.mp3";
@@ -16,7 +21,7 @@ public class AudioExample implements Runnable {
         TrydentEngine.runOnce(new AudioExample());
     }
 
-    private void togglePlaying(){
+    private void togglePlaying() {
         if(Audio.isPlaying()) {
             Audio.pauseAudio();
         } else {
@@ -37,7 +42,7 @@ public class AudioExample implements Runnable {
                 if(Mouse.isMouseDownOnce(MouseButton.SECONDARY)) {
                     Audio.createSoundEffect(sfx).setBalance(1).setVolume(0.5).play();
                 }
-                if(Mouse.isMouseDownOnce(MouseButton.MIDDLE)){
+                if(Mouse.isMouseDownOnce(MouseButton.MIDDLE)) {
                     togglePlaying();
                 }
             });
