@@ -48,8 +48,8 @@ public class GameScreenController {
     private void pressed(ActionEvent event) {
         TrydentEngine.runOnce(() -> {
                 Button target = (Button) event.getSource();
-                if((boolean) target.getUserData()){
-                    if(player){
+                if((boolean) target.getUserData()) {
+                    if(player) {
                         target.setText("X");
                     } else {
                         target.setText("O");
