@@ -10,7 +10,7 @@ dependencies. By default, `gradle build` outputs .class and .jar files to the `b
 
 To run only our tests, run `gradle test`.
 
-To see some blinking lights, try: `gradle sample -P example=AnimationExample`
+To see some blinking lights, try: `gradle sample -P example=AnimationExample`.
 For more examples, look in `src/main/java/edu/gatech/cs2340/trydent/sample`.
 
 For other useful commands, see `gradle tasks`.
