@@ -15,5 +15,13 @@ dependencies {
 }
 
 task whitespace (type: Exec) {
+    description 'Removes trailing whitespace from current working tree.'
     commandLine "./config/checkstyle/space-clean"
+}
+
+task sample (dependsOn: build, type: Exec) {
+    description 'Runs a sample, e.x. \"gradle sample -P example=CLASSNAME\". Valid examples found in src/main/java/edu/gatech/cs2340/trydent/sample'
+    doFirst {
+        commandLine "java", "-cp", "build/libs/Trydent.jar", "edu.gatech.cs2340.trydent.sample.$example"
+    }
 }
