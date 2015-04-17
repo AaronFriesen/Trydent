@@ -17,4 +17,12 @@ public abstract class Behavior extends ContinuousEvent {
         return object;
     }
 
+    @Override
+    public void onPreUpdate() {
+        super.onPreUpdate();
+        if (getGameObject().isDestroyed()) {
+            stop();
+        }
+    }
+
 }

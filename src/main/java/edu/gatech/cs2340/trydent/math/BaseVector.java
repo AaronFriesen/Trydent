@@ -174,6 +174,21 @@ public abstract class BaseVector<T extends BaseVector<T>> {
     }
 
     /**
+     * Sets the components of this vector to the components of the other vector.
+     *
+     * @param vector
+     *            the other vector.
+     * @return the reference to this vector for method chaining convenience
+     */
+    @SuppressWarnings("unchecked")
+    public T set(BaseVector<?> vector) {
+        for (int i = 0; i < values.length && i < vector.getComponentCount(); i++) {
+            values[i] = vector.getComponent(i);
+        }
+        return (T) this;
+    }
+
+    /**
      * Adds the second vector to this vector. I.e.:
      * <p>
      * {@code this = this + other}
@@ -408,6 +423,32 @@ public abstract class BaseVector<T extends BaseVector<T>> {
             values[i] = (1.0 - t) * values[i] + t * other.values[i];
         }
         return (T) this;
+    }
+
+    /**
+     * Returns this vector projected onto the given axis.
+     * <p>
+     * Mathematically, this method is {@code V = dot(V, axis) * axis};
+     *
+     * @param otherAxis
+     *            the (assumedly unit) vector to project this vector onto.
+     * @return the reference to this vector for method chaining convenience
+     */
+    public T projectToAxis(BaseVector<?> otherAxis) {
+        return set(otherAxis.copy().normalize().scale(dot(otherAxis)));
+    }
+
+    /**
+     * Removes the `otherAxis' component of this vector.
+     * <p>
+     * Mathematically, this method is {@code V = V - dot(V, axis) * axis};
+     *
+     * @param otherAxis
+     *            the (assumedly unit) vector to project this vector off of.
+     * @return the reference to this vector for method chaining convenience
+     */
+    public T projectOffAxis(BaseVector<?> otherAxis) {
+        return subtract(otherAxis.copy().normalize().scale(dot(otherAxis)));
     }
 
     /**

@@ -3,6 +3,7 @@ package edu.gatech.cs2340.trydent.math;
 import java.lang.reflect.Array;
 
 import javafx.scene.transform.Transform;
+import edu.gatech.cs2340.trydent.math.geom.Rectangle;
 
 /**
  * Library of advanced math tools, primarily linear algebra.
@@ -268,6 +269,42 @@ public class MathTools {
      */
     public static Position getTranslation(Transform matrix) {
         return new Position(matrix.getTx(), matrix.getTy());
+    }
+
+    /**
+     * Returns true if the rectangles (x0, y0, w0, h0) and (x1, y1, w1, h1) intersect or contain each other.
+     * @param x0 Left coordinate of rectangle 0.
+     * @param y0 Top coordinate of rectangle 0.
+     * @param w0 Width of rectangle 0.
+     * @param h0 Height of rectangle 0.
+     * @param x1 Left coordinate of rectangle 1.
+     * @param y1 Top coordinate of rectangle 1.
+     * @param w1 Width of rectangle 1.
+     * @param h1 Height of rectangle 1.
+     * @return Whether the rectangles intersect.
+     */
+    public static boolean doRectanglesIntersect(double x0, double y0, double w0, double h0, double x1, double y1,
+            double w1, double h1) {
+        // Test left and top edge.
+        if (x0 > x1 + w1) return false;
+        if (y0 > y1 + h1) return false;
+        // Test right and bottom edge.
+        if (x1 > x0 + w0) return false;
+        if (y1 > y0 + h0) return false;
+        return true;
+    }
+
+    /**
+     * Returns true if the rectangles r0 and r1 intersect or contain each other.
+     * @param r0 the first rectangle.
+     * @param r1 the second rectangle.
+     * @return Whether the rectangles intersect.
+     */
+    public static boolean doRectanglesIntersect(Rectangle r0, Rectangle r1) {
+        return doRectanglesIntersect(
+                r0.getLeft(), r0.getTop(), r0.getWidth(), r0.getHeight(),
+                r1.getLeft(), r1.getTop(), r1.getWidth(), r1.getHeight()
+        );
     }
 
 }

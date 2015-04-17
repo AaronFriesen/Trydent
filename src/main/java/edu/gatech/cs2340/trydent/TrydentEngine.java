@@ -32,6 +32,8 @@ public class TrydentEngine {
 
     private volatile long frameNumber;
 
+    private volatile boolean superCalledFlag = false;
+
     private Set<ContinuousEvent> continuousEvents, continuousEventsToAdd, continuousEventsToRemove;
 
     private Map<Runnable, ContinuousEvent> continuousRunnables;
@@ -86,6 +88,12 @@ public class TrydentEngine {
         }
 
         for (ContinuousEvent event : continuousEvents) {
+            clearSuperCalledFlag();
+            event.onPreUpdate();
+            if (!superCalledFlag) {
+                throw new TrydentException("ContinuousEvent " + event
+                        + " overloaded onPreUpdate() but failed to call super method!");
+            }
             event.doUpdate();
         }
     }
@@ -109,6 +117,16 @@ public class TrydentEngine {
         if (instance == null)
             instance = new TrydentEngine();
         return instance;
+    }
+
+    /** For internal engine use only. */
+    static void clearSuperCalledFlag() {
+        getInstance().superCalledFlag = false;
+    }
+
+    /** For internal engine use only. */
+    static void setSuperCalledFlag() {
+        getInstance().superCalledFlag = true;
     }
 
     /**

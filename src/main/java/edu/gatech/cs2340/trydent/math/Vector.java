@@ -10,6 +10,9 @@ package edu.gatech.cs2340.trydent.math;
  */
 public class Vector extends BaseVector<Vector> {
 
+    public static final Vector AXIS_X = new Vector(1, 0);
+    public static final Vector AXIS_Y = new Vector(0, 1);
+
     /**
      * Creates a new 2D vector pointing in the direction dx, dy.
      *
