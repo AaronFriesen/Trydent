@@ -41,7 +41,7 @@ public class Sprite extends GameObject {
         Image[] result = new Image[filenames.length];
         for (int i=0; i < filenames.length; i++) {
             try {
-                result[i] = new Image(filenames[i]);
+                result[i] = Images.getImage(filenames[i]);
             } catch (IllegalArgumentException ex) {
                 throw new TrydentException("Could not find the image filename. " + filenames[i], ex);
             }
