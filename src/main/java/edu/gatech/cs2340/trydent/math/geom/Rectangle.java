@@ -226,7 +226,7 @@ public class Rectangle implements JavaFxConvertable {
 
     /**
      * Creates a new Rectangle identical to this one.
-     * @return
+     * @return the new Rectangle instance.
      */
     public Rectangle copy() {
         return new Rectangle(this);

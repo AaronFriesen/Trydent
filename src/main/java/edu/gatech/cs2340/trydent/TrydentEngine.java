@@ -299,6 +299,7 @@ public class TrydentEngine {
 
     /**
      * Sets the window title string for the TrydentEngine singleton.
+     * @param title the title of the window.
      */
     public static void setWindowTitle(String title) {
         getInstance().fxManager.setWindowTitle(title);
@@ -306,6 +307,8 @@ public class TrydentEngine {
 
     /**
      * Sets the window dimensions for the TrydentEngine singleton.
+     * @param width the width of the window
+     * @param height the height of the window
      */
     public static void setWindowSize(int width, int height) {
         getInstance().fxManager.setWindowSize(width, height);
@@ -313,6 +316,7 @@ public class TrydentEngine {
 
     /**
      * Sets the window background color for the TrydentEngine singleton.
+     * @param color the background color.
      */
     public static void setBackgroundColor(Color color) {
         getInstance().fxManager.setBackgroundColor(color);

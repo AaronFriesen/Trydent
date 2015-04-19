@@ -46,7 +46,6 @@ import edu.gatech.cs2340.trydent.math.curve.TimeWrapMode;
  * For example, say you want to add to GameObject the ability to serialize
  * themselves -- that is, the ability to store a String representation of
  * themselves, for use in a save-game feature. You might do the following:
- * <p>
  *
  * <pre>
  * public interface Serializer {
@@ -192,11 +191,12 @@ public class GameObject {
     /**
      * Associates a new `feature' with this GameObject.
      * <p>
-     * {@see edu.gatech.cs2340.trydent.GameObject} for a discussion of what
+     * @see edu.gatech.cs2340.trydent.GameObject for a discussion of what
      * features are and how to use them.
      *
      * @param feature
      *            the Object to add as a feature.
+     * @param <T> the type of the feature.
      */
     public <T> void addFeature(T feature) {
         Class<?> key = feature.getClass();
@@ -209,11 +209,12 @@ public class GameObject {
     /**
      * Retrieves a `feature' of the given type associated with this GameObject.
      * <p>
-     * {@see edu.gatech.cs2340.trydent.GameObject} for a discussion of what
+     * @see edu.gatech.cs2340.trydent.GameObject for a discussion of what
      * features are and how to use them.
      *
      * @param type
      *            the type (or supertype) of the feature to retrieve.
+     * @param <T> the type of the feature.
      * @return the feature if it exists, null otherwise.
      */
     @SuppressWarnings("unchecked")
@@ -239,7 +240,7 @@ public class GameObject {
      * Retrieves all `features' of the given type associated with this
      * GameObject.
      * <p>
-     * {@see edu.gatech.cs2340.trydent.GameObject} for a discussion of what
+     * @see edu.gatech.cs2340.trydent.GameObject for a discussion of what
      * features are and how to use them.
      *
      * @param type
@@ -247,6 +248,7 @@ public class GameObject {
      *            passing in `Object.class' will retrieve <i>all</i> features on
      *            this game objects, because all features are subclasses of the
      *            java Object superclass.
+     * @param <T> the type of the feature.
      * @return an Iterable over all features of the given type that this object
      *         contains.
      */
@@ -267,11 +269,12 @@ public class GameObject {
      * Checks whether this object contains a `feature' of the given type
      * associated with this GameObject.
      * <p>
-     * {@see edu.gatech.cs2340.trydent.GameObject} for a discussion of what
+     * @see edu.gatech.cs2340.trydent.GameObject for a discussion of what
      * features are and how to use them.
      *
      * @param type
      *            the type (or supertype) of the feature to check for.
+     * @param <T> the type of the feature.
      * @return true if this object has a feature of the given type, false
      *         otherwise.
      */
@@ -283,11 +286,12 @@ public class GameObject {
      * Removes all `features' of (or subclasses of) the given type associated
      * with this GameObject.
      * <p>
-     * {@see edu.gatech.cs2340.trydent.GameObject} for a discussion of what
+     * @see edu.gatech.cs2340.trydent.GameObject for a discussion of what
      * features are and how to use them.
      *
      * @param type
      *            the type (or supertype) of the features to remove.
+     * @param <T> the type of the feature.
      */
     public <T> void removeAllFeatures(Class<T> type) {
         Set<Class<?>> toRemove = new HashSet<>();
@@ -305,11 +309,14 @@ public class GameObject {
      * Removes the `feature' of (or a subclass of) the given type associated
      * with this GameObject.
      * <p>
-     * {@see edu.gatech.cs2340.trydent.GameObject} for a discussion of what
+     * @see edu.gatech.cs2340.trydent.GameObject for a discussion of what
      * features are and how to use them.
      *
-     * @param type
+     * @param feature
      *            the type (or supertype) of the feature to remove.
+     * @param <T> the type of the feature.
+     * @return true if the feature was removed, false if there was no feature
+     *            to remove.
      */
     public <T> boolean removeFeature(T feature) {
         for (Class<?> key : features.keySet()) {
@@ -325,7 +332,7 @@ public class GameObject {
     /**
      * Sets the fill of the underlying javafx node, if applicable.
      *
-     * @param paint
+     * @param paint the fill color as a javaFx paint.
      */
     public void setFill(Paint paint) {
         if (fxNode != null && fxNode.getChildren().size() > 0) {
@@ -756,7 +763,7 @@ public class GameObject {
      * This should be used with caution, to avoid breaking Trydent's scene
      * graph.
      *
-     * @return
+     * @return the underyling JavaFX Group.
      */
     protected Group getFxNode() {
         return fxNode;
@@ -816,7 +823,7 @@ public class GameObject {
     /**
      * Returns whether this object has been destroyed.
      *
-     * @return
+     * @return true if this object has been destroyed.
      */
     public boolean isDestroyed() {
         return isDestroyed;

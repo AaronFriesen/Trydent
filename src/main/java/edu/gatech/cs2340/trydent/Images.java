@@ -16,6 +16,8 @@ public class Images {
     /**
      * Attempts to load an image, fetching from the cache if the image is already in memory.
      * @see #reloadImage for arguments
+     * @param filename the filename
+     * @return the image at the given file
      */
     public static Image getImage(String filename) {
         Image result;
