@@ -7,4 +7,5 @@ edu.gatech.cs2340.trydent.math.curve
 edu.gatech.cs2340.trydent.math.geom
 edu.gatech.cs2340.trydent.sample
 edu.gatech.cs2340.trydent.sample.breakout
+edu.gatech.cs2340.trydent.sample.lasagna
 edu.gatech.cs2340.trydent.sample.tictactoe
